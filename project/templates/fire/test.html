@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <link href="/static/css/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript">
+    function getPage() {
+        var pageNum = $('#pageNum').val();
+        if(pageNum >= 1 && pageNum <= {{ Page.paginator.num_pages }}){
+            location.assign("http://127.0.0.1:8000/fire/test?page="+pageNum)
+        }
+        else{
+            alert('请输入正确的页码!')
+        }
+    }
+    </script>
+
+</head>
+<body>
+<nav aria-label="Page navigation" style="float: right">
+        <ul class="pagination">
+            <li>
+                {% if Page.has_previous %}
+                    <a href="?page={{ Page.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                {% endif %}
+            </li>
+            <!-- 形如 12345678910...13 -->
+            <li>
+                {% if ifEllipsis == 1 %}
+                    {% if Page.number >= 1 and Page.number <= 10 %}
+                        {% for i in range1 %}
+                            {% if i >= 1 and i <= 10 %}
+                                <li {% if Page.number == i %} class="active" {% endif %}>
+                                    <a href="?page={{ i }}">{{ i }}</a>
+                                </li>
+                            {% elif i == 12 %}
+                                <li {% if Page.number == Page.paginator.num_pages %} class="active" {% endif %}>
+                                    <a href="?page={{ Page.paginator.num_pages }}">{{ Page.paginator.num_pages }}</a>
+                                </li>
+                            {% elif i == 11 %}
+                                <li>
+                                    <a>...</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif Page.number == Page.paginator.num_pages %}
+                        {% for i in range1 %}
+                            {% if i >= 1 and i <= 10 %}
+                                <li {% if Page.number == i %} class="active" {% endif %}>
+                                    <a href="?page={{ i }}">{{ i }}</a>
+                                </li>
+                            {% elif i == 12 %}
+                                <li {% if Page.number == Page.paginator.num_pages %} class="active" {% endif %}>
+                                    <a href="?page={{ Page.paginator.num_pages }}">{{ Page.paginator.num_pages }}</a>
+                                </li>
+                            {% elif i == 11 %}
+                                <li>
+                                    <a>...</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif Page.number == 11 %}
+                        {% for i in range3 %}
+                            {% if i >= 1 and i <= 10 %}
+                                <li {% if Page.number == i %} class="active" {% endif %}>
+                                    <a href="?page={{ i }}">{{ i }}</a>
+                                </li>
+                            {% elif i == 13 %}
+                                <li {% if Page.number == Page.paginator.num_pages %} class="active" {% endif %}>
+                                    <a href="?page={{ Page.paginator.num_pages }}">{{ Page.paginator.num_pages }}</a>
+                                </li>
+                            {% elif i == 11 %}
+                                <li {% if Page.number == i %} class="active" {% endif %}>
+                                    <a href="?page={{ i }}">{{ i }}</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a>...</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif Page.number == lastButOne  %}
+                        {% for i in range3 %}
+                            {% if i >= 1 and i <= 10 %}
+                                <li {% if Page.number == i %} class="active" {% endif %}>
+                                    <a href="?page={{ i }}">{{ i }}</a>
+                                </li>
+                            {% elif i == 13 %}
+                                <li {% if Page.number == Page.paginator.num_pages %} class="active" {% endif %}>
+                                    <a href="?page={{ Page.paginator.num_pages }}">{{ Page.paginator.num_pages }}</a>
+                                </li>
+                            {% elif i == 12 %}
+                                <li {% if Page.number == lastButOne %} class="active" {% endif %}>
+                                    <a href="?page={{ lastButOne }}">{{ lastButOne }}</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a>...</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif Page.number > 11 and Page.number < lastButOne %}
+                        {% for i in range2 %}
+                            {% if i >= 1 and i <= 10 %}
+                                <li {% if Page.number == i %} class="active" {% endif %}>
+                                    <a href="?page={{ i }}">{{ i }}</a>
+                                </li>
+                            {% elif i == 11 %}
+                                <li>
+                                    <a>...</a>
+                                </li>
+                            {% elif i == 12 %}
+                                <li class="active">
+                                    <a href="?page={{ Page.number }}">{{ Page.number }}</a>
+                                </li>
+                            {% elif i == 13 %}
+                                <li>
+                                    <a>...</a>
+                                </li>
+                            {% elif i == 14 %}
+                                <li {% if Page.number == Page.paginator.num_pages %} class="active" {% endif %}>
+                                    <a href="?page={{ Page.paginator.num_pages }}">{{ Page.paginator.num_pages }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% elif ifEllipsis == 0 %}
+                    {% for i in Page.paginator.page_range %}
+                        <li {% if Page.number == i %} class="active" {% endif %}>
+                            <a href="?page={{ i }}">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+            </li>
+            <li>
+                {% if Page.has_next %}
+                    <a href="?page={{ Page.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                {% endif %}
+            </li>
+            <li>
+                <a>共{{ Page.paginator.num_pages }}页</a>
+            </li>
+            <li>
+                跳转至<input type="text" id="pageNum" size="1">页
+                <button type="button" class="btn btn-default btn-sm" onclick="getPage();">
+                    <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>详情页</title>
+    <link href="/static/css/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <style>
+        .top_box{
+            width: 100%;
+            height: 52px;
+            background-color: #417690;
+            position: relative;
+        }
+        .top_box p{
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #f5dd5d;
+            position: absolute;
+            left: 20px;
+            top: 8px;
+        }
+        .right_box{
+            width: 220px;
+            height: 20px;
+            position: absolute;
+            right: 0px;
+            top: 16px;
+
+        }
+        .right_box a{
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="top_box">
+    <p>经验指挥情况案例详情</p>
+    <div class="right_box">
+        <a href="javascript:void(0)">
+            欢迎您{{ username }}
+        </a>
+        <span style="color: #ffffff">/</span>
+        <a href="/fire/exper">
+            返回
+        </a>
+    </div>
+</div>
+<form action="/fire/updatefire"  method="post">
+{% csrf_token %}    <!-- 防跨站伪造令牌 -->
+    <table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>
+            字段名
+        </th>
+        <th>
+            字段值
+        </th>
+    </tr>
+    </thead>
+        {% for e in e1 %}
+            <thead>
+            <tr>
+                <td>
+                    <b>经验总结分析</b>
+                </td>
+            </tr>
+            </thead>
+            <tr>
+            <td>
+                id
+            </td>
+             <td>
+                 {{ e.id }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾标题
+            </td>
+            <td>
+                {{ e.title }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾发生地点
+            </td>
+            <td>
+                {{ e.place }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                起火面积
+            </td>
+            <td>
+                {{ e.area }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾经济损失
+            </td>
+            <td>
+                {{ e.fire_economic }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                起火原因
+            </td>
+            <td>
+                {{ e.fire_cause }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾责任相关处理
+            </td>
+            <td>
+                {{ e.fire_res }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾扑救主要经验教训
+            </td>
+            <td>
+                {{ e.fire_exper }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾善后补偿情况
+            </td>
+            <td>
+                {{ e.fire_com }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                灾后改进措施
+            </td>
+            <td>
+                {{ e.dis_mea }}
+            </td>
+        </tr>
+            <thead>
+            <tr>
+                <td>
+                    <b>人员伤亡情况</b>
+                </td>
+            </tr>
+            </thead>
+            <tr>
+            <td>
+                id
+            </td>
+            <td>
+               {{ e.dead.id }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                死亡人数
+            </td>
+            <td>
+                {{ e.dead.死亡人数 }}
+            </td>
+        </tr>
+            <tr>
+            <td>
+                重伤人数
+            </td>
+            <td>
+                {{ e.dead.重伤人数 }}
+            </td>
+        </tr>
+            </tr>
+            <tr>
+            <td>
+                轻伤人数
+            </td>
+            <td>
+                {{ e.dead.轻伤人数 }}
+            </td>
+        </tr>
+            </tr>
+            <tr>
+            <td>
+                男性死亡人数
+            </td>
+            <td>
+                {{ e.dead.男性死亡人数 }}
+            </td>
+        </tr>
+            </tr>
+            <tr>
+            <td>
+                女性死亡人数
+            </td>
+            <td>
+                {{ e.dead.女性死亡人数 }}
+            </td>
+        </tr>
+            <tr>
+            <td>
+                本地死亡人数
+            </td>
+            <td>
+                {{ e.dead.本地死亡人数 }}
+            </td>
+        </tr>
+            <tr>
+            <td>
+                外地死亡人数
+            </td>
+            <td>
+                {{ e.dead.外地死亡人数 }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</form>
+</body>
+</html>

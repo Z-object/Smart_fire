@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <style>
+        .box{
+            width: 400px;
+            height: 300px;
+            background-color: #f6f6f6;
+            margin: 0 auto;
+            margin-top: 100px;
+            position: relative;
+        }
+        .we{
+            width: 400px;
+            height: 60px;
+            background-color: #417690;
+        }
+        .we p{
+            font-size: 20px;
+            font-weight: inherit;
+            letter-spacing: 1px;
+            position: absolute;
+            left: 50px;
+            top: -5px;
+            color: #f6f6f6;
+        }
+        .lab1{
+            position: absolute;
+            top: 100px;
+            left: 40px;
+        }
+        .lab2{
+            position: absolute;
+            top: 160px;
+            left: 40px;
+        }
+        .input1{
+            position: absolute;
+            width: 300px;
+            height: 20px;
+            top: 130px;
+            left: 40px;
+        }
+        .input2{
+            position: absolute;
+            top: 190px;
+            left: 40px;
+            width: 300px;
+            height: 20px;
+        }
+        .input3{
+            position: absolute;
+            top: 230px;
+            left: 80px;
+            width: 100px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div class="we">
+        <p>欢迎你{{ username }},请在下方修改密码</p>
+    </div>
+    <form action="/fire/adminaltpsd" method="post">
+        {% csrf_token %}
+        <div style="color: #ba2121;display: {% if error %} block {% endif %} none;position: absolute;top: 70px;left: 40px">{{ error }}</div>
+        <label for="la1" class="lab1">请输入新密码:</label>
+        <input type="password" name="pasd1" id="la1" class="input1"></br>
+        <label for="la2" class="lab2">请再次输入:</label>
+        <input type="password"  name="pasd2" id="la2" class="input2"></br>
+        <button type="submit"  class="input3 btn btn-primary">修改密码</button>
+    </form>
+    <a href="/fire/users"><button type="button" style="position: absolute;top: 230px;right: 80px;width: 100px;height: 30px;" class="btn btn-info">返回</button></a>
+</div>
+</body>
+</html>

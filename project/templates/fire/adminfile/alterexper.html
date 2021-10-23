@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案例管理</title>
+    <link href="/static/css/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <style>
+        .top_box{
+            width: 100%;
+            height: 52px;
+            background-color: #417690;
+            position: relative;
+        }
+        .top_box p{
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #f5dd5d;
+            position: absolute;
+            left: 20px;
+            top: 8px;
+        }
+        .right_box{
+            width: 220px;
+            height: 20px;
+            position: absolute;
+            right: 0px;
+            top: 16px;
+
+        }
+        .right_box a{
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="top_box">
+    <p>经验指挥情况案例管理</p>
+    <div class="right_box">
+        <a href="javascript:void(0)">
+            欢迎您{{ username }}
+        </a>
+        <span style="color: #ffffff">/</span>
+        <a href="/fire/adminpsd">
+            修改密码
+        </a>
+        <span style="color: #ffffff">/</span>
+        <a href="/fire/adminexper">
+            返回
+        </a>
+    </div>
+</div>
+<form action="/fire/alterexper"  method="post">
+{% csrf_token %}    <!-- 防跨站伪造令牌 -->
+    <table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>
+            字段名
+        </th>
+        <th>
+            需要增加的值
+        </th>
+    </tr>
+    </thead>
+            <thead>
+            <tr>
+                <td>
+                    <b>经验总结分析</b>
+                </td>
+            </tr>
+            </thead>
+        <tr>
+            <td>
+                火灾标题
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="title">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾发生地点
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="place">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                起火面积
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="area" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾经济损失
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="fire_economic">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                起火原因
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="fire_cause">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾责任相关处理
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="fire_res">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾扑救主要经验教训
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="fire_exper">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾善后补偿情况
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="fire_com">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                灾后改进措施
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="dis_mea" >
+            </td>
+        </tr>
+            <thead>
+            <tr>
+                <td>
+                    <b>人员伤亡情况</b>
+                </td>
+            </tr>
+            </thead>
+            <tr>
+        <tr>
+            <td>
+                死亡人数
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="死亡人数">
+            </td>
+        </tr>
+            <tr>
+            <td>
+                重伤人数
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="重伤人数">
+            </td>
+        </tr>
+            </tr>
+            <tr>
+            <td>
+                轻伤人数
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="轻伤人数">
+            </td>
+        </tr>
+            </tr>
+            <tr>
+            <td>
+                男性死亡人数
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="男性死亡人数">
+            </td>
+        </tr>
+            </tr>
+            <tr>
+            <td>
+                女性死亡人数
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="女性死亡人数">
+            </td>
+        </tr>
+            <tr>
+            <td>
+                本地死亡人数
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="本地死亡人数">
+            </td>
+        </tr>
+            <tr>
+            <td>
+                外地死亡人数
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="外地死亡人数">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                0-14死亡人数
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="dead1">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                14-60死亡人数
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="dead2">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                60岁以上死亡人数
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="dead3">
+            </td>
+        </tr>
+                <tr>
+            <td>
+                操作
+            </td>
+            <td>
+                <button type="submit" class="btn btn-primary">提交</button>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

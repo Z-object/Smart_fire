@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案例管理</title>
+    <link href="/static/css/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <style>
+        .top_box{
+            width: 100%;
+            height: 52px;
+            background-color: #417690;
+            position: relative;
+        }
+        .top_box p{
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #f5dd5d;
+            position: absolute;
+            left: 20px;
+            top: 8px;
+        }
+        .right_box{
+            width: 220px;
+            height: 20px;
+            position: absolute;
+            right: 0px;
+            top: 16px;
+
+        }
+        .right_box a{
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="top_box">
+    <p>火灾基本情况案例管理</p>
+    <div class="right_box">
+        <a href="javascript:void(0)">
+            欢迎您{{ username }}
+        </a>
+        <span style="color: #ffffff">/</span>
+        <a href="/fire/adminpsd">
+            修改密码
+        </a>
+        <span style="color: #ffffff">/</span>
+        <a href="/fire/index2">
+            返回
+        </a>
+    </div>
+</div>
+ {% for f in f1 %}
+<form action="/fire/updatefire?id={{ f.id }}"  method="post">
+{% csrf_token %}    <!-- 防跨站伪造令牌 -->
+    <table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>
+            字段名
+        </th>
+        <th>
+            需要修改的值
+        </th>
+    </tr>
+    </thead>
+            <tr>
+            <td>
+                id
+            </td>
+             <td>
+                 {{ f.id }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                标题
+            </td>
+            <td>
+                <input type="text" name="title"  class="form-control" value="{{ f.title }}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾发生地点
+            </td>
+            <td>
+                <input type="text" name="place" class="form-control" value="{{ f.place }}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                详细位置
+            </td>
+            <td>
+                <input type="text" name="detal_place" class="form-control" value="{{ f.detal_place }}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾发生日期
+            </td>
+            <td>
+                <input type="text" name="date" class="form-control" value="{{ f.date | date:"Y-m-d" }}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾发生时间
+            </td>
+            <td>
+                <input type="text" name="time" class="form-control" value="{{ f.time }}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾类别
+            </td>
+            <td>
+                <label>
+                <select class="form-control" name="fire_type">
+                  <option {% if f.get_fire_type_display == 'A类' %} selected {% endif %}>A类</option>
+                  <option {% if f.get_fire_type_display == 'B类' %} selected {% endif %}>B类</option>
+                  <option {% if f.get_fire_type_display == 'C类' %} selected {% endif %}>C类</option>
+                  <option {% if f.get_fire_type_display == 'D类' %} selected {% endif %}>D类</option>
+                  <option {% if f.get_fire_type_display == 'E类' %} selected {% endif %}>E类</option>
+                  <option {% if f.get_fire_type_display == 'F类' %} selected {% endif %}>F类</option>
+                  <option {% if f.get_fire_type_display == '未知' %} selected {% endif %}>未知</option>
+                </select>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾级别
+            </td>
+            <td>
+                <label>
+                <select class="form-control" name="fire_level">
+                  <option  {% if f.get_fire_level_display == '一般火灾' %} selected {% endif %}>一般火灾</option>
+                  <option  {% if f.get_fire_level_display == '较大火灾' %} selected {% endif %}>较大火灾</option>
+                  <option  {% if f.get_fire_level_display == '重大火灾' %} selected {% endif %}>重大火灾</option>
+                  <option  {% if f.get_fire_level_display == '特别重大火灾' %} selected {% endif %}>特别重大火灾</option>
+                  <option  {% if f.get_fire_level_display == '未知' %} selected {% endif %}>未知</option>
+                </select>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾持续时间
+            </td>
+            <td>
+                <input type="text" name="last_time" class="form-control" value="{{ f.last_time }}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                主要可燃物
+            </td>
+            <td>
+                <input type="text" name="major_th" class="form-control" value="{{ f.major_th }}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                消防设施情况
+            </td>
+            <td>
+                <label>
+                <select class="form-control" name="fire_equip">
+                  <option value="True" {% if f.get_fire_build_display == '有' %} selected {% endif %}>有</option>
+                  <option value="False" {% if f.get_fire_build_display == '没有' %} selected {% endif %}>无</option>
+                  <option value="None" {% if f.get_fire_build_display == '未知' %} selected {% endif %}>未知</option>
+                </select>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                附近水源情况
+            </td>
+            <td>
+                <label>
+                <select class="form-control" name="water">
+                  <option value="True" {% if f.get_water_display == '有' %} selected {% endif %}>有</option>
+                  <option value="False" {% if f.get_water_display == '没有' %} selected {% endif %}>无</option>
+                  <option value="None" {% if f.get_water_display == '未知' %} selected {% endif %}>未知</option>
+                </select>
+                </label>
+            </td>
+        </tr>
+            <thead>
+            <tr>
+                <td>
+                    <b>气象情况</b>
+                </td>
+            </tr>
+            </thead>
+            <tr>
+            <td>
+                id
+            </td>
+            <td>
+               {{ f.air.id }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                风力
+            </td>
+            <td>
+                <input type="text"  name="wind" class="form-control" value="{{ f.air.wind }}">
+            </td>
+        </tr>
+            <tr>
+            <td>
+                风向
+            </td>
+            <td>
+                <input type="text" name="wind_dir" class="form-control" value="{{ f.air.wind_dir }}">
+            </td>
+        </tr>
+            </tr>
+            <tr>
+            <td>
+                天气条件
+            </td>
+            <td>
+                <input type="text" name="weather_con" class="form-control" value="{{ f.air.weather_con }}">
+            </td>
+        </tr>
+            </tr>
+            <tr>
+            <td>
+                温度
+            </td>
+            <td>
+                <input type="text" name="temper" class="form-control" value="{{ f.air.temper }}">
+            </td>
+        </tr>
+            </tr>
+            <tr>
+            <td>
+                湿度
+            </td>
+            <td>
+                <input type="text" name="hum" class="form-control" value="{{ f.air.hum }}">
+            </td>
+        </tr>
+            <thead>
+            <tr>
+                <td>
+                    <b>建筑结构特点</b>
+                </td>
+            </tr>
+            </thead>
+            {% for b in b1 %}
+                <tr>
+            <td>
+                id
+            </td>
+            <td>
+                {{ b.id }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                普通建筑
+            </td>
+            <td>
+                <label>
+                <select class="form-control" name="combuild">
+                  <option value="True" {% if b.get_com_bulid_display == '是' %} selected {% endif %}>是</option>
+                  <option value="False" {% if b.get_com_bulid_display == '否' %} selected {% endif %}>否</option>
+                  <option value="None" {% if b.get_com_bulid_display == '未知' %} selected {% endif %}>未知</option>
+                </select>
+                </label>
+            </td>
+        </tr>
+                <tr>
+            <td>
+                古建筑
+            </td>
+            <td>
+                <label>
+                <select class="form-control" name="oldbuild">
+                  <option value="True" {% if b.get_old_build_display == '是' %} selected {% endif %}>是</option>
+                  <option value="False" {% if b.get_old_build_display == '否' %} selected {% endif %}>否</option>
+                  <option value="None" {% if b.get_old_build_display == '未知' %} selected {% endif %}>未知</option>
+                </select>
+                </label>
+            </td>
+        </tr>
+                <tr>
+            <td>
+                物资仓库
+            </td>
+            <td>
+                <label>
+                <select class="form-control" name="wzck">
+                  <option value="True" {% if b.get_wuzi_ck_display == '是' %} selected {% endif %}>是</option>
+                  <option value="False" {% if b.get_wuzi_ck_display == '否' %} selected {% endif %}>否</option>
+                  <option value="None" {% if b.get_wuzi_ck_display == '未知' %} selected {% endif %}>未知</option>
+                </select>
+                </label>
+            </td>
+        </tr>
+                <tr>
+            <td>
+                生产仓库
+            </td>
+            <td>
+                <label>
+                <select class="form-control" name="scck">
+                  <option value="True" {% if b.get_product_cq_display == '是' %} selected {% endif %}>是</option>
+                  <option value="False" {% if b.get_product_cq_display == '否' %} selected {% endif %}>否</option>
+                  <option value="None" {% if b.get_product_cq_display == '未知' %} selected {% endif %}>未知</option>
+                </select>
+                </label>
+            </td>
+        </tr>
+                <tr>
+            <td>
+                储罐区
+            </td>
+            <td>
+               <label>
+                <select class="form-control" name="cgq">
+                  <option value="True" {% if b.get_chugq_display == '是' %} selected {% endif %}>是</option>
+                  <option value="False" {% if b.get_chugq_display == '否' %} selected {% endif %}>否</option>
+                  <option value="None" {% if b.get_chugq_display == '未知' %} selected {% endif %}>未知</option>
+                </select>
+                </label>
+            </td>
+        </tr>
+                <tr>
+            <td>
+                高层建筑
+            </td>
+            <td>
+                <label>
+                <select class="form-control" name="highbuild">
+                  <option value="True" {% if b.get_hall_build_display == '是' %} selected {% endif %}>是</option>
+                  <option value="False" {% if b.get_hall_build_display == '否' %} selected {% endif %}>否</option>
+                  <option value="None" {% if b.get_hall_build_display == '未知' %} selected {% endif %}>未知</option>
+                </select>
+                </label>
+            </td>
+        </tr>
+                <tr>
+            <td>
+                操作
+            </td>
+            <td>
+                <button type="submit" class="btn btn-primary">提交修改</button>
+            </td>
+        </tr>
+                {% endfor %}
+        {% endfor %}
+    </table>
+</form>
+</body>
+</html>

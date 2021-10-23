@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>火灾基本情况爬取</title>
+    <link href="/static/css/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/static/css/firesi.css" type="text/css">
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/static/js/index.js"></script>
+    <script type="text/javascript" src="/static/js/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body >
+<!--总的大盒子  开始-->
+<div class="box" style="height: 800px;background-color: #f6f6f6">
+    <!--顶部导航栏  开始-->
+    {% for u in user %}
+    <div class="navbox">
+        <p style="position: absolute;left: 1180px;top: 5px;">欢迎您,{{ u.username }}</p>
+        {% if u.goods_pic %}
+        <img style="position: absolute;left: 1330px;top: 0px;width:120px; height:120px; border-radius:50%; overflow:hidden;width: 40px;height: 40px" src="/static/media/{{ u.goods_pic }}">
+            {% else %}
+        <img style="position: absolute;left: 1330px;top: 0px;width:120px; height:120px; border-radius:50%; overflow:hidden;width: 40px;height: 40px" src="/static/img/图片.png">
+        {% endif %}
+        <a href="/fire/login" >退出登录</a>
+    </div>
+    {% endfor %}
+    <!--顶部导航栏  结束-->
+    <!--中部部导航栏  开始-->
+    <div class="navbox2">
+        <p>城市消防安全系统</p>
+        <div class="box1" style="width: 154px;position: absolute;right: 1200px">
+            <img src="/static/images/nav/1.png" style="margin-left: 15px">
+            <a href="/fire/index2" onclick="bot1how()" style="margin-left: 15px">数据管理</a>
+        </div>
+        <div class="box2" style="width: 154px;position: absolute;right: 1000px">
+            <img src="/static/images/nav/1.png" style="margin-left: 20px">
+            <a href="javascript:void(0)" style="margin-left: 20px">数据采集</a>
+        </div>
+        <div class="box3" style="width: 154px;position: absolute;right: 800px">
+            <img src="/static/images/nav/2.png" style="margin-left: 18px">
+            <a href="javascript:void(0)" style="margin-left: 18px">数据分析/可视化</a>
+        </div>
+        <div class="box4" style="width: 154px;position: absolute;right: 600px">
+            <img src="/static/images/nav/3.png" style="margin-left: 20px">
+            <a href="javascript:void(0)" style="margin-left: 20px">地理信息可视化</a>
+        </div>
+        <div class="box5" style="width: 154px;position: absolute;right: 400px">
+            <img src="/static/images/nav/3.png" style="margin-left: 24px">
+            <a href="javascript:void(0)" style="margin-left: 24px">救援方案管理</a>
+        </div>
+        <div class="box7" style="width: 154px;position: absolute;right: 200px">
+            <img src="/static/images/nav/5.png" style="margin-left: 22px">
+            <a href="javascript:void(0)" style="margin-left: 22px">系统设置</a>
+        </div>
+        <div class="box9" style="width: 154px">
+            <img src="/static/images/nav/7.png" style="margin-left: 24px">
+            <a href="/fire/users" style="margin-left: 24px">用户管理</a>
+        </div>
+    </div>
+    <!--中部部导航栏  结束-->
+    <!--数据采集  开始-->
+    <div class="bottom_box1" id="bot1"  style="display: block;height: 600px">
+    <!--左边导航栏  开始-->
+    <div class="left_box" style="height: 400px">
+        <!--数据管理导航  开始-->
+        <div class="left_box1">
+            <img src="/static/images/1.png" class="img_box">
+            <p>数据采集</p>
+        </div>
+        <!--数据管理导航  开始-->
+        <!--导航栏1  开始-->
+        <div class="min_navbox">
+            <img src="/static/images/2.png" class="min_img" style="margin-left: 15px">
+            <a href="/fire/rep_index" >综合数据爬取</a>
+        </div>
+        <!--导航栏1  结束-->
+        <!--导航栏2  开始-->
+        <div class="min_navbox">
+            <img src="/static/images/2.png" class="min_img" style="margin-left: 15px">
+            <a href="javascript:void(0)">火灾基本情况爬取</a>
+        </div>
+        <!--导航栏2  结束-->
+        <!--导航栏3  开始-->
+        <div class="min_navbox">
+            <img src="/static/images/2.png" class="min_img" style="margin-left: 15px">
+            <a href="/fire/rep_fight"  >火灾作战指挥爬取</a>
+        </div>
+        <!--导航栏3  结束-->
+        <!--导航栏4  开始-->
+        <div class="min_navbox">
+            <img src="/static/images/2.png" class="min_img" style="margin-left: 15px">
+            <a href="/fire/rep_exper"  >火灾经验总结爬取</a>
+        </div>
+        <!--导航栏4  结束-->
+    </div>
+    <!--左下部导航栏  结束-->
+    <!--火灾基本情况爬取  开始-->
+    <div class="nav_box1" id="nav_box1" >
+        <div style="width: 1340px;height: 30px;background-color: #ffffff;border-bottom: solid 1px;">
+            <p style="padding-top: 4px;letter-spacing: 3px;margin-left: 20px;color: #222222;font-weight: bold">请选择字段爬取</p>
+        </div>
+        <form class="form-inline">
+            <!--第一列  开始-->
+            <div class="form-group" style="margin-top: 40px;margin-left: 90px">
+                <label for="exampleInputName2">省份:</label>
+                <select class="form-control" style="width: 200px">
+                    <option>北京市</option>
+                    <option>天津市</option>
+                    <option>上海市</option>
+                    <option>重庆市</option>
+                    <option>河北省</option>
+                    <option>山西省</option>
+                    <option>辽宁省</option>
+                    <option>吉林省</option>
+                    <option>江苏省</option>
+                    <option>浙江省</option>
+                    <option>安徽省</option>
+                    <option>福建省</option>
+                    <option>江西省</option>
+                    <option>山东省</option>
+                    <option>台湾省</option>
+                    <option>河南省</option>
+                    <option>湖北省</option>
+                    <option>湖南省</option>
+                    <option>广东省</option>
+                    <option>海南省</option>
+                    <option>四川省</option>
+                    <option>贵州省</option>
+                    <option>云南省</option>
+                    <option>陕西省</option>
+                    <option>甘肃省</option>
+                    <option>青海省</option>
+                    <option>黑龙江省</option>
+                    <option>西藏自治区</option>
+                    <option>内蒙古自治区</option>
+                    <option>香港特别行政区</option>
+                    <option>澳门特别行政区</option>
+                    <option>广西壮族自治区</option>
+                    <option>宁夏回族自治区</option>
+                    <option>新疆维吾尔自治区</option>
+                </select>
+            </div>
+            <div class="form-group" style="margin-top: 40px;margin-left: 40px">
+                <label for="exampleInputEmail2">火灾类别:</label>
+                <select class="form-control" style="width: 200px">
+                    <option>A类</option>
+                    <option>B类</option>
+                    <option>C类</option>
+                    <option>D类</option>
+                    <option>E类</option>
+                </select>
+            </div>
+            <div class="form-group" style="margin-top: 40px;margin-left: 40px">
+                <label for="exampleInputName2">火灾级别:</label>
+                <select class="form-control" style="width: 200px">
+                    <option>一般火灾</option>
+                    <option>较大火灾</option>
+                    <option>重大火灾</option>
+                    <option>特别重大火灾</option>
+                </select>
+            </div>
+            <div class="form-group" style="margin-top: 40px;margin-left: 40px">
+                <label for="exampleInputEmail2">建筑结构:</label>
+                <select class="form-control" style="width: 200px">
+                    <option>普通建筑</option>
+                    <option>古建筑</option>
+                    <option>物资仓库</option>
+                    <option>生产厂区</option>
+                    <option>储罐区</option>
+                    <option>集会场所</option>
+                    <option>高层建筑</option>
+                </select>
+            </div>
+            <!--第一列  结束-->
+            <!--第二列  开始-->
+            <div class="form-group" style="margin-top: 40px;margin-left: 90px">
+                <label for="exampleInputName2">来源:</label>
+                <input type="text" class="form-control" id="exampleInputName2" placeholder="爬取网址">
+            </div>
+            <div class="form-group" style="margin-top: 40px;margin-left: 40px">
+                <label for="exampleInputEmail2">消防设施情况:</label>
+                <label class="radio-inline">
+                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">有
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">无
+                </label>
+            </div>
+            <div class="form-group" style="margin-top: 40px;margin-left: 130px">
+                <label for="exampleInputEmail2">附近水源情况:</label>
+                <label class="radio-inline">
+                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">有
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">无
+                </label>
+            </div>
+            <div class="form-group" style="margin-top: 40px;margin-left: 130px">
+                <label for="exampleInputEmail2">持续时间:</label>
+                <input type="email" class="form-control" id="exampleInputEmail2">
+            </div>
+            <!--第二列  结束-->
+            <!--第三列  开始-->
+            <div class="form-group" style="margin-top: 40px;margin-left: 90px">
+                <label for="exampleInputName2">日期:</label>
+                <input type="text" class="form-control" id="exampleInputName2" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" placeholder="请输入正确格式YY-MM-DD">
+            </div>
+            <div class="form-group" style="margin-top: 40px;margin-left: 40px">
+                <label for="exampleInputEmail2">气象情况:</label>
+                <input type="email" class="form-control" id="exampleInputEmail2">
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg active" style="margin-top: 35px;margin-left: 80px">开始爬取</button>
+        </form>
+    </div>
+    <!--火灾基本情况爬取  结束-->
+
+    <!--数据采集  结束-->
+
+</div>
+<!--总的大盒子  结束-->
+
+</body>
+</html>

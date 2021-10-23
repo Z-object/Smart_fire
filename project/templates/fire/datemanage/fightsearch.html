@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>作战指挥情况</title>
+    <link href="/static/css/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/css/fight.css" type="text/css">
+    <script src="/static/js/index.js"></script>
+    <style>
+        .autocut {
+            width:100px;
+            height: 30px;
+            overflow:hidden;
+            white-space:nowrap;
+            text-overflow:ellipsis;
+            -o-text-overflow:ellipsis;
+            -icab-text-overflow: ellipsis;
+            -khtml-text-overflow: ellipsis;
+            -moz-text-overflow: ellipsis;-webkit-text-overflow: ellipsis;
+    }  
+    </style>
+    <script type="text/javascript">
+    function getPage() {
+        var pageNum = $('#pageNum').val();
+        if(pageNum >= 1 && pageNum <= {{ Page.paginator.num_pages }}){
+            window.location.href="http://127.0.0.1:8000/fire/fightsearch?page="+pageNum+"&area={{ area }}";
+        }
+        else{
+            alert('请输入正确的页码!')
+        }
+    }
+    </script>
+</head>
+<body >
+<!--总的大盒子  开始-->
+<div class="box" style="height: 600px">
+    <!--顶部导航栏  开始-->
+    {% for u in user %}
+    <div class="navbox">
+        <p style="position: absolute;left: 1180px;top: 5px;">欢迎您,{{ u.username }}</p>
+        {% if u.goods_pic %}
+        <img style="position: absolute;left: 1330px;top: 0px;width:120px; height:120px; border-radius:50%; overflow:hidden;width: 40px;height: 40px" src="/static/media/{{ u.goods_pic }}">
+            {% else %}
+        <img style="position: absolute;left: 1330px;top: 0px;width:120px; height:120px; border-radius:50%; overflow:hidden;width: 40px;height: 40px" src="/static/img/图片.png">
+        {% endif %}
+        <a href="/fire/login" >退出登录</a>
+    </div>
+    {% endfor %}
+    <!--顶部导航栏  结束-->
+    <!--中部部导航栏  开始-->
+    <div class="navbox2">
+        <p>城市消防安全系统</p>
+        <div class="box1" style="width: 180px;position: absolute;right: 1120px">
+            <img src="/static/images/nav/8.png" style="margin-left: 15px">
+            <a href="javascript:void(0)" onclick="bot1how()" style="margin-left: 15px">数据管理</a>
+        </div>
+        <div class="box3" style="width: 180px;position: absolute;right: 900px">
+            <img src="/static/images/nav/2.png" style="margin-left: 18px">
+            <a href="/fire/datevis" style="margin-left: 18px">数据分析/可视化</a>
+        </div>
+        <div class="box4" style="width: 180px;position: absolute;right: 670px">
+            <img src="/static/images/nav/3.png" style="margin-left: 20px">
+            <a href="http://localhost:8088/index" style="margin-left: 20px">地理信息可视化</a>
+        </div>
+        <div class="box5" style="width: 180px;position: absolute;right: 450px">
+            <img src="/static/images/nav/3.png" style="margin-left: 24px">
+            <a href="javascript:void(0)" style="margin-left: 24px">救援方案管理</a>
+        </div>
+        <div class="box7" style="width: 180px;position: absolute;right: 250px">
+            <img src="/static/images/nav/5.png" style="margin-left: 22px">
+            <a href="javascript:void(0)" style="margin-left: 22px">系统设置</a>
+        </div>
+        <div class="box9" style="width: 180px;position: absolute;right: 0px">
+            <img src="/static/images/nav/7.png" style="margin-left: 24px">
+            <a href="/fire/personcenter" style="margin-left: 24px">个人中心</a>
+        </div>
+    </div>
+    <!--中部部导航栏  结束-->
+    <!--数据管理  开始-->
+    <div class="bottom_box1" id="bot1"  style="display: block;height: 600px">
+    <!--左边导航栏  开始-->
+    <div class="left_box" style="height: 680px">
+        <!--数据管理导航  开始-->
+        <div class="left_box1">
+            <img src="/static/images/1.png" class="img_box">
+            <p>数据管理</p>
+        </div>
+        <!--数据管理导航  开始-->
+        <!--导航栏1  开始-->
+        <div class="min_navbox">
+            <img src="/static/images/2.png" class="min_img">
+            <a href="/fire/firesi" >火灾基本情况</a>
+        </div>
+        <!--导航栏1  结束-->
+        <!--导航栏2  开始-->
+        <div class="min_navbox" >
+            <img src="/static/images/2.png" class="min_img">
+            <a href="javascript:void(0)">火灾作战指挥</a>
+        </div>
+        <!--导航栏2  结束-->
+        <!--导航栏3  开始-->
+        <div class="min_navbox">
+            <img src="/static/images/2.png" class="min_img">
+            <a href="/fire/exper"  >火灾经验总结</a>
+        </div>
+        <!--导航栏3  结束-->
+        <!--导航栏4  结束-->
+    </div>
+    <!--左下部导航栏  结束-->
+    <!--导航栏详细1  开始-->
+    <div class="nav_box1" style="display: none" id="nav_box1">
+
+    </div>
+    <!--导航栏详细1  结束-->
+    <!--导航栏详细2  开始-->
+    <div class="nav_box2" style="display: block;height: 680px;background-color: #f6f6f6" id="nav_box2">
+        <div style="width: 1340px;height: 30px;background-color: #ffffff;border-bottom: solid 1px">
+            <p style="padding-top: 4px;letter-spacing: 3px;margin-left: 20px">火灾作战指挥</p>
+        </div>
+        <div style="width: 1340px;height: 50px;margin-left: 20px">
+            <form action="/fire/fightsearch" method="post" >
+                {% csrf_token %}
+                <input style="width: 250px;height: 30px;margin-top: 10px" type="text" name="area" placeholder="请输入火灾区域搜索" id="myInput">
+                <input type="submit" value="搜索">
+            </form>
+        </div>
+        <div style="width: 1300px;height: 418px;background-color: #f6f6f6;border-style: solid;border-width: 1px;margin-left: 20px">
+
+            <table id="idData" class="table table-bordered" style="width: 1300px;height: 300px;margin-right: 10px;border-style: solid;border-radius: 10px" border="1" >
+            <thead>
+                    <tr>
+                        <th style="width: 31.2px">
+                            ID
+                        </th>
+                        <th style="width: 229.6px">
+                            火灾区域
+                        </th>
+                        <th style="width: 229.6px">
+                            被困人数
+                        </th>
+                        <th style="width: 229.6px">
+                            侦察情况
+                        </th>
+                        <th style="width: 229.6px">
+                            火灾扑救战术
+                        </th>
+                        <th style="width: 229.6px">
+                            火灾异变
+                        </th>
+                        <th style="width: 120px">
+                            操作
+
+                        </th>
+                    </tr>
+                    </thead>
+                {% for item in Page %}
+                <tr>
+                    <td style="width: 30px;height: 20px">{{ item.0 }}</td>
+                    <td><div class="autocut"  title="{{ item.4 }}" style="float: left">{{ item.4 }}</div></td>
+                    <td><div class="autocut"  title="{{ item.2 }}" style="float: left">{{ item.2 }}</div></td>
+                    <td><div class="autocut"  title="{{ item.3 }}" style="float: left">{{ item.3 }}</div></td>
+                    <td><div class="autocut"  title="{{ item.5 }}" style="float: left">{{ item.5 }}</div></td>
+                    <td><div class="autocut"  title="{{ item.6 }}" style="float: left">{{ item.6 }}</div></td>
+                    <td>
+                        <img style="width: 12px;height: 12px;" src="/static/img/详细信息.png">
+                            <a href="/fire/fightdetail1?id={{ item.0 }}" style="text-decoration: none;">详情</a>
+                    </td>
+                </tr>
+                {% endfor %}
+              </table>
+        </div>
+        <div style="width: 800px;height: 200px;position: absolute;top: 500px;left: 500px">
+        <div aria-label="Page navigation" >
+        <ul class="pagination">
+            <li>
+                {% if Page.has_previous %}
+                    <a href="?page={{ Page.previous_page_number }}&area={{ area }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                {% endif %}
+            </li>
+            <!-- 形如 12345678910...13 -->
+            <li>
+                {% if ifEllipsis == 1 %}
+                    {% if Page.number >= 1 and Page.number <= 10 %}
+                        {% for i in range1 %}
+                            {% if i >= 1 and i <= 10 %}
+                                <li {% if Page.number == i %} class="active" {% endif %}>
+                                    <a href="?page={{ i }}&area={{ area }}">{{ i }}</a>
+                                </li>
+                            {% elif i == 12 %}
+                                <li {% if Page.number == Page.paginator.num_pages %} class="active" {% endif %}>
+                                    <a href="?page={{ Page.paginator.num_pages }}&area={{ area }}">{{ Page.paginator.num_pages }}</a>
+                                </li>
+                            {% elif i == 11 %}
+                                <li>
+                                    <a>...</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif Page.number == Page.paginator.num_pages %}
+                        {% for i in range1 %}
+                            {% if i >= 1 and i <= 10 %}
+                                <li {% if Page.number == i %} class="active" {% endif %}>
+                                    <a href="?page={{ i }}&area={{ area }}">{{ i }}</a>
+                                </li>
+                            {% elif i == 12 %}
+                                <li {% if Page.number == Page.paginator.num_pages %} class="active" {% endif %}>
+                                    <a href="?page={{ Page.paginator.num_pages }}&area={{ area }}">{{ Page.paginator.num_pages }}</a>
+                                </li>
+                            {% elif i == 11 %}
+                                <li>
+                                    <a>...</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif Page.number == 11 %}
+                        {% for i in range3 %}
+                            {% if i >= 1 and i <= 10 %}
+                                <li {% if Page.number == i %} class="active" {% endif %}>
+                                    <a href="?page={{ i }}&area={{ area }}">{{ i }}</a>
+                                </li>
+                            {% elif i == 13 %}
+                                <li {% if Page.number == Page.paginator.num_pages %} class="active" {% endif %}>
+                                    <a href="?page={{ Page.paginator.num_pages }}&area={{ area }}">{{ Page.paginator.num_pages }}</a>
+                                </li>
+                            {% elif i == 11 %}
+                                <li {% if Page.number == i %} class="active" {% endif %}>
+                                    <a href="?page={{ i }}&area={{ area }}">{{ i }}</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a>...</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif Page.number == lastButOne  %}
+                        {% for i in range3 %}
+                            {% if i >= 1 and i <= 10 %}
+                                <li {% if Page.number == i %} class="active" {% endif %}>
+                                    <a href="?page={{ i }}&area={{ area }}">{{ i }}</a>
+                                </li>
+                            {% elif i == 13 %}
+                                <li {% if Page.number == Page.paginator.num_pages %} class="active" {% endif %}>
+                                    <a href="?page={{ Page.paginator.num_pages }}&area={{ area }}">{{ Page.paginator.num_pages }}</a>
+                                </li>
+                            {% elif i == 12 %}
+                                <li {% if Page.number == lastButOne %} class="active" {% endif %}>
+                                    <a href="?page={{ lastButOne }}&area={{ area }}">{{ lastButOne }}</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a>...</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif Page.number > 11 and Page.number < lastButOne %}
+                        {% for i in range2 %}
+                            {% if i >= 1 and i <= 10 %}
+                                <li {% if Page.number == i %} class="active" {% endif %}>
+                                    <a href="?page={{ i }}&area={{ area }}">{{ i }}</a>
+                                </li>
+                            {% elif i == 11 %}
+                                <li>
+                                    <a>...</a>
+                                </li>
+                            {% elif i == 12 %}
+                                <li class="active">
+                                    <a href="?page={{ Page.number }}&area={{ area }}">{{ Page.number }}</a>
+                                </li>
+                            {% elif i == 13 %}
+                                <li>
+                                    <a>...</a>
+                                </li>
+                            {% elif i == 14 %}
+                                <li {% if Page.number == Page.paginator.num_pages %} class="active" {% endif %}>
+                                    <a href="?page={{ Page.paginator.num_pages }}&area={{ area }}">{{ Page.paginator.num_pages }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% elif ifEllipsis == 0 %}
+                    {% for i in Page.paginator.page_range %}
+                        <li {% if Page.number == i %} class="active" {% endif %}>
+                            <a href="?page={{ i }}&area={{ area }}">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+            </li>
+            <li>
+                {% if Page.has_next %}
+                    <a href="?page={{ Page.next_page_number }}&area={{ area }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                {% endif %}
+            </li>
+            <li>
+                <a>共{{ Page.paginator.num_pages }}页</a>
+            </li>
+            <li>
+                跳转至<input type="text" id="pageNum" size="1">页
+                <button type="button" class="btn btn-default btn-sm" onclick="getPage();">
+                    <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                </button>
+            </li>
+        </ul>
+    </div>
+        </div>
+    </div>
+    <!--导航栏详细2  结束-->
+    <!--导航栏详细3  开始-->
+    <div class="nav_box3" style="display: none" id="nav_box3">
+    </div>
+    <!--导航栏详细3  结束-->
+    <!--导航栏详细4  开始-->
+    <div class="nav_box4" style="display: none" id="nav_box4" >
+
+    </div>
+    <!--导航栏详细4  结束-->
+    </div>
+    <!--数据管理  结束-->
+    <!--数据采集  开始-->
+    <div class="bottom_box1"id="bot2"  style="display: none">
+        <!--左边导航栏  开始-->
+        <div class="left_box">
+            <!--数据管理导航  开始-->
+            <div class="left_box1">
+                <img src="/static/images/nav/1.png" class="img_box">
+                <p>数据采集</p>
+            </div>
+            <!--数据管理导航  开始-->
+            <!--导航栏1  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box21')" onmouseout="hideD('nav_box21')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)" >导航栏1</a>
+            </div>
+            <!--导航栏1  结束-->
+            <!--导航栏2  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box22')" onmouseout="hideD('nav_box22')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)">导航栏2</a>
+            </div>
+            <!--导航栏2  结束-->
+            <!--导航栏3  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box23')" onmouseout="hideD('nav_box23')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)"  >导航栏3</a>
+            </div>
+            <!--导航栏3  结束-->
+            <!--导航栏4  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box24')" onmouseout="hideD('nav_box24')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)">导航栏4</a>
+            </div>
+            <!--导航栏4  结束-->
+        </div>
+        <!--左下部导航栏  结束-->
+        <!--导航栏详细1  开始-->
+        <div class="nav_box1" style="display: block" id="nav_box21" onmousemove="showD('nav_box21')" onmouseout="hideD('nav_box21')">
+        </div>
+        <!--导航栏详细1  结束-->
+        <!--导航栏详细2  开始-->
+        <div class="nav_box2" style="display: none" id="nav_box22" onmousemove="showD('nav_box22')" onmouseout="hideD('nav_box22')">
+
+        </div>
+        <!--导航栏详细2  结束-->
+        <!--导航栏详细3  开始-->
+        <div class="nav_box3" style="display: none" id="nav_box23" onmousemove="showD('nav_box23')" onmouseout="hideD('nav_box23')">
+
+        </div>
+        <!--导航栏详细3  结束-->
+        <!--导航栏详细4  开始-->
+        <div class="nav_box4" style="display: none" id="nav_box24" onmousemove="showD('nav_box24')" onmouseout="hideD('nav_box24')">
+
+        </div>
+        <!--导航栏详细4  结束-->
+    </div>
+    <!--数据采集  结束-->
+    <!--数据分析/可视化  开始-->
+    <div class="bottom_box1"id="bot3"  style="display: none">
+        <!--左边导航栏  开始-->
+        <div class="left_box">
+            <!--数据管理导航  开始-->
+            <div class="left_box1">
+                <img src="/static/images/nav/2.png" class="img_box">
+                <p>数据可视化</p>
+            </div>
+            <!--数据管理导航  开始-->
+            <!--导航栏1  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box31')" onmouseout="hideD('nav_box31')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)" >导航栏1</a>
+            </div>
+            <!--导航栏1  结束-->
+            <!--导航栏2  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box32')" onmouseout="hideD('nav_box32')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)">导航栏2</a>
+            </div>
+            <!--导航栏2  结束-->
+            <!--导航栏3  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box33')" onmouseout="hideD('nav_box33')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)"  >导航栏3</a>
+            </div>
+            <!--导航栏3  结束-->
+            <!--导航栏4  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box34')" onmouseout="hideD('nav_box34')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)">导航栏4</a>
+            </div>
+            <!--导航栏4  结束-->
+        </div>
+        <!--左下部导航栏  结束-->
+        <!--导航栏详细1  开始-->
+        <div class="nav_box1" style="display: block" id="nav_box31" onmousemove="showD('nav_box31')" onmouseout="hideD('nav_box31')">
+
+        </div>
+        <!--导航栏详细1  结束-->
+        <!--导航栏详细2  开始-->
+        <div class="nav_box2" style="display: none" id="nav_box32" onmousemove="showD('nav_box32')" onmouseout="hideD('nav_box32')">
+            <h1>这里写数据分析/可视化部分</h1>
+        </div>
+        <!--导航栏详细2  结束-->
+        <!--导航栏详细3  开始-->
+        <div class="nav_box3" style="display: none" id="nav_box33" onmousemove="showD('nav_box33')" onmouseout="hideD('nav_box33')">
+
+        </div>
+        <!--导航栏详细3  结束-->
+        <!--导航栏详细4  开始-->
+        <div class="nav_box4" style="display: none" id="nav_box34" onmousemove="showD('nav_box34')" onmouseout="hideD('nav_box34')">
+
+        </div>
+        <!--导航栏详细4  结束-->
+    </div>
+    <!--数据分析/可视化  结束-->
+    <!--预警预案管理  开始-->
+    <div class="bottom_box1" id="bot4"  style="display: none">
+        <!--左边导航栏  开始-->
+        <div class="left_box">
+            <!--数据管理导航  开始-->
+            <div class="left_box1">
+                <img src="/static/images/nav/3.png" class="img_box">
+                <p>预警管理</p>
+            </div>
+            <!--数据管理导航  开始-->
+            <!--导航栏1  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box41')" onmouseout="hideD('nav_box41')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)" >导航栏1</a>
+            </div>
+            <!--导航栏1  结束-->
+            <!--导航栏2  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box42')" onmouseout="hideD('nav_box42')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)">导航栏2</a>
+            </div>
+            <!--导航栏2  结束-->
+            <!--导航栏3  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box43')" onmouseout="hideD('nav_box43')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)"  >导航栏3</a>
+            </div>
+            <!--导航栏3  结束-->
+            <!--导航栏4  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box44')" onmouseout="hideD('nav_box44')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)">导航栏4</a>
+            </div>
+            <!--导航栏4  结束-->
+        </div>
+        <!--左下部导航栏  结束-->
+        <!--导航栏详细1  开始-->
+        <div class="nav_box1" style="display: block" id="nav_box41" onmousemove="showD('nav_box41')" onmouseout="hideD('nav_box41')">
+        </div>
+        <!--导航栏详细1  结束-->
+        <!--导航栏详细2  开始-->
+        <div class="nav_box2" style="display: none" id="nav_box42" onmousemove="showD('nav_box42')" onmouseout="hideD('nav_box42')">
+
+        </div>
+        <!--导航栏详细2  结束-->
+        <!--导航栏详细3  开始-->
+        <div class="nav_box3" style="display: none" id="nav_box43" onmousemove="showD('nav_box43')" onmouseout="hideD('nav_box43')">
+
+        </div>
+        <!--导航栏详细3  结束-->
+        <!--导航栏详细4  开始-->
+        <div class="nav_box4" style="display: none" id="nav_box44" onmousemove="showD('nav_box44')" onmouseout="hideD('nav_box44')">
+
+        </div>
+        <!--导航栏详细4  结束-->
+    </div>
+    <!--预警预案管理  结束-->
+    <!--救援方案管理  开始-->
+    <div class="bottom_box1" id="bot5"  style="display: none">
+        <!--左边导航栏  开始-->
+        <div class="left_box">
+            <!--数据管理导航  开始-->
+            <div class="left_box1">
+                <img src="/static/images/nav/3.png" class="img_box">
+                <p>方案管理</p>
+            </div>
+            <!--数据管理导航  开始-->
+            <!--导航栏1  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box51')" onmouseout="hideD('nav_box51')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)" >导航栏1</a>
+            </div>
+            <!--导航栏1  结束-->
+            <!--导航栏2  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box52')" onmouseout="hideD('nav_box52')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)">导航栏2</a>
+            </div>
+            <!--导航栏2  结束-->
+            <!--导航栏3  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box53')" onmouseout="hideD('nav_box53')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)"  >导航栏3</a>
+            </div>
+            <!--导航栏3  结束-->
+            <!--导航栏4  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box54')" onmouseout="hideD('nav_box54')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)">导航栏4</a>
+            </div>
+            <!--导航栏4  结束-->
+        </div>
+        <!--左下部导航栏  结束-->
+        <!--导航栏详细1  开始-->
+        <div class="nav_box1" style="display: block" id="nav_box51" onmousemove="showD('nav_box51')" onmouseout="hideD('nav_box51')">
+        </div>
+        <!--导航栏详细1  结束-->
+        <!--导航栏详细2  开始-->
+        <div class="nav_box2" style="display: none" id="nav_box52" onmousemove="showD('nav_box52')" onmouseout="hideD('nav_box52')">
+
+        </div>
+        <!--导航栏详细2  结束-->
+        <!--导航栏详细3  开始-->
+        <div class="nav_box3" style="display: none" id="nav_box53" onmousemove="showD('nav_box53')" onmouseout="hideD('nav_box53')">
+
+        </div>
+        <!--导航栏详细3  结束-->
+        <!--导航栏详细4  开始-->
+        <div class="nav_box4" style="display: none" id="nav_box54" onmousemove="showD('nav_box54')" onmouseout="hideD('nav_box54')">
+
+        </div>
+        <!--导航栏详细4  结束-->
+    </div>
+    <!--救援方案管理  结束-->
+    <!--街道/村分析功能  开始-->
+    <div class="bottom_box1" id="bot6"  style="display: none">
+        <!--左边导航栏  开始-->
+        <div class="left_box">
+            <!--数据管理导航  开始-->
+            <div class="left_box1">
+                <img src="/static/images/nav/4.png" class="img_box">
+                <p>分析功能</p>
+            </div>
+            <!--数据管理导航  开始-->
+            <!--导航栏1  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box61')" onmouseout="hideD('nav_box61')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)" >导航栏1</a>
+            </div>
+            <!--导航栏1  结束-->
+            <!--导航栏2  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box62')" onmouseout="hideD('nav_box62')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)">导航栏2</a>
+            </div>
+            <!--导航栏2  结束-->
+            <!--导航栏3  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box63')" onmouseout="hideD('nav_box63')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)"  >导航栏3</a>
+            </div>
+            <!--导航栏3  结束-->
+            <!--导航栏4  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box64')" onmouseout="hideD('nav_box64')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)">导航栏4</a>
+            </div>
+            <!--导航栏4  结束-->
+        </div>
+        <!--左下部导航栏  结束-->
+        <!--导航栏详细1  开始-->
+        <div class="nav_box1" style="display: block" id="nav_box61" onmousemove="showD('nav_box1')" onmouseout="hideD('nav_box61')">
+        </div>
+        <!--导航栏详细1  结束-->
+        <!--导航栏详细2  开始-->
+        <div class="nav_box2" style="display: none" id="nav_box62" onmousemove="showD('nav_box2')" onmouseout="hideD('nav_box62')">
+
+        </div>
+        <!--导航栏详细2  结束-->
+        <!--导航栏详细3  开始-->
+        <div class="nav_box3" style="display: none" id="nav_box63" onmousemove="showD('nav_box3')" onmouseout="hideD('nav_box63')">
+
+        </div>
+        <!--导航栏详细3  结束-->
+        <!--导航栏详细4  开始-->
+        <div class="nav_box4" style="display: none" id="nav_box64" onmousemove="showD('nav_box4')" onmouseout="hideD('nav_box64')">
+
+        </div>
+        <!--导航栏详细4  结束-->
+    </div>
+    <!--街道/村分析功能  结束-->
+    <!--系统设置  开始-->
+    <div class="bottom_box1" id="bot7" style="display: none">
+        <!--左边导航栏  开始-->
+        <div class="left_box">
+            <!--数据管理导航  开始-->
+            <div class="left_box1">
+                <img src="/static/images/nav/5.png" class="img_box">
+                <p>系统设置</p>
+            </div>
+            <!--数据管理导航  开始-->
+            <!--导航栏1  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box71')" onmouseout="hideD('nav_box71')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)" >导航栏1</a>
+            </div>
+            <!--导航栏1  结束-->
+            <!--导航栏2  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box72')" onmouseout="hideD('nav_box72')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)">导航栏2</a>
+            </div>
+            <!--导航栏2  结束-->
+            <!--导航栏3  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box73')" onmouseout="hideD('nav_box73')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)"  >导航栏3</a>
+            </div>
+            <!--导航栏3  结束-->
+            <!--导航栏4  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box74')" onmouseout="hideD('nav_box74')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)">导航栏4</a>
+            </div>
+            <!--导航栏4  结束-->
+        </div>
+        <!--左下部导航栏  结束-->
+        <!--导航栏详细1  开始-->
+        <div class="nav_box1" style="display: block" id="nav_box71" onmousemove="showD('nav_box71')" onmouseout="hideD('nav_box71')">
+        </div>
+        <!--导航栏详细1  结束-->
+        <!--导航栏详细2  开始-->
+        <div class="nav_box2" style="display: none" id="nav_box72" onmousemove="showD('nav_box72')" onmouseout="hideD('nav_box72')">
+
+        </div>
+        <!--导航栏详细2  结束-->
+        <!--导航栏详细3  开始-->
+        <div class="nav_box3" style="display: none" id="nav_box73" onmousemove="showD('nav_box73')" onmouseout="hideD('nav_box73')">
+
+        </div>
+        <!--导航栏详细3  结束-->
+        <!--导航栏详细4  开始-->
+        <div class="nav_box4" style="display: none" id="nav_box74" onmousemove="showD('nav_box74')" onmouseout="hideD('nav_box74')">
+
+        </div>
+        <!--导航栏详细4  结束-->
+    </div>
+    <!--系统设置  结束-->
+    <!--邮件信息  开始-->
+    <div class="bottom_box1" id="bot8"  style="display: none">
+        <!--左边导航栏  开始-->
+        <div class="left_box">
+            <!--数据管理导航  开始-->
+            <div class="left_box1">
+                <img src="/static/images/nav/6.png" class="img_box">
+                <p>邮件信息</p>
+            </div>
+            <!--数据管理导航  开始-->
+            <!--导航栏1  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box81')" onmouseout="hideD('nav_box81')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)" >导航栏1</a>
+            </div>
+            <!--导航栏1  结束-->
+            <!--导航栏2  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box82')" onmouseout="hideD('nav_box82')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)">导航栏2</a>
+            </div>
+            <!--导航栏2  结束-->
+            <!--导航栏3  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box83')" onmouseout="hideD('nav_box83')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)"  >导航栏3</a>
+            </div>
+            <!--导航栏3  结束-->
+            <!--导航栏4  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box84')" onmouseout="hideD('nav_box84')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)">导航栏4</a>
+            </div>
+            <!--导航栏4  结束-->
+        </div>
+        <!--左下部导航栏  结束-->
+        <!--导航栏详细1  开始-->
+        <div class="nav_box1" style="display: block" id="nav_box81" onmousemove="showD('nav_box1')" onmouseout="hideD('nav_box81')">
+            <h1>这里写邮件信息部分</h1>
+        </div>
+        <!--导航栏详细1  结束-->
+        <!--导航栏详细2  开始-->
+        <div class="nav_box2" style="display: none" id="nav_box82" onmousemove="showD('nav_box2')" onmouseout="hideD('nav_box82')">
+
+        </div>
+        <!--导航栏详细2  结束-->
+        <!--导航栏详细3  开始-->
+        <div class="nav_box3" style="display: none" id="nav_box83" onmousemove="showD('nav_box3')" onmouseout="hideD('nav_box83')">
+
+        </div>
+        <!--导航栏详细3  结束-->
+        <!--导航栏详细4  开始-->
+        <div class="nav_box4" style="display: none" id="nav_box84" onmousemove="showD('nav_box4')" onmouseout="hideD('nav_box84')">
+
+        </div>
+        <!--导航栏详细4  结束-->
+    </div>
+    <!--邮件信息  结束-->
+    <!--个人信息  开始-->
+    <div class="bottom_box1" id="bot9" style="display: none">
+        <!--左边导航栏  开始-->
+        <div class="left_box">
+            <!--数据管理导航  开始-->
+            <div class="left_box1">
+                <img src="/static/images/nav/7.png" class="img_box">
+                <p>个人信息</p>
+            </div>
+            <!--数据管理导航  开始-->
+            <!--导航栏1  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box91')" onmouseout="hideD('nav_box91')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)" >导航栏1</a>
+            </div>
+            <!--导航栏1  结束-->
+            <!--导航栏2  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box92')" onmouseout="hideD('nav_box92')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)">导航栏2</a>
+            </div>
+            <!--导航栏2  结束-->
+            <!--导航栏3  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box93')" onmouseout="hideD('nav_box93')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)"  >导航栏3</a>
+            </div>
+            <!--导航栏3  结束-->
+            <!--导航栏4  开始-->
+            <div class="min_navbox" onmousemove="showD('nav_box94')" onmouseout="hideD('nav_box94')">
+                <img src="/static/images/2.png" class="min_img">
+                <a href="javascript:void(0)">导航栏4</a>
+            </div>
+            <!--导航栏4  结束-->
+        </div>
+        <!--左下部导航栏  结束-->
+        <!--导航栏详细1  开始-->
+        <div class="nav_box1" style="display: block" id="nav_box91" onmousemove="showD('nav_box91')" onmouseout="hideD('nav_box91')">
+        </div>
+        <!--导航栏详细1  结束-->
+        <!--导航栏详细2  开始-->
+        <div class="nav_box2" style="display: none" id="nav_box92" onmousemove="showD('nav_box92')" onmouseout="hideD('nav_box92')">
+        </div>
+        <!--导航栏详细2  结束-->
+        <!--导航栏详细3  开始-->
+        <div class="nav_box3" style="display: none" id="nav_box93" onmousemove="showD('nav_box93')" onmouseout="hideD('nav_box93')">
+
+        </div>
+        <!--导航栏详细3  结束-->
+        <!--导航栏详细4  开始-->
+        <div class="nav_box4" style="display: none" id="nav_box94" onmousemove="showD('nav_box94')" onmouseout="hideD('nav_box94')">
+
+        </div>
+        <!--导航栏详细4  结束-->
+    </div>
+    <!--个人信息  结束-->
+</div>
+<!--总的大盒子  结束-->
+</body>
+</html>

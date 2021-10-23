@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>火灾基本情况</title>
+    <link href="/static/css/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/firesi.css" type="text/css">
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <script src="/static/js/index.js"></script>
+    <style>
+        .autocut {
+            width:100px;
+            height: 30px;
+            overflow:hidden;
+            white-space:nowrap;
+            text-overflow:ellipsis;
+            -o-text-overflow:ellipsis;
+            -icab-text-overflow: ellipsis;
+            -khtml-text-overflow: ellipsis;
+            -moz-text-overflow: ellipsis;-webkit-text-overflow: ellipsis;
+    }  
+    </style>
+    <script type="text/javascript">
+    function getPage() {
+        var pageNum = $('#pageNum').val();
+        if(pageNum >= 1 && pageNum <= {{ Page.paginator.num_pages }}){
+            location.assign("http://127.0.0.1:8000/fire/firesi?page="+pageNum)
+        }
+        else{
+            alert('请输入正确的页码!')
+        }
+    }
+    </script>
+</head>
+<body >
+<!--总的大盒子  开始-->
+<div class="box" style="height: 800px;background-color: #f6f6f6">
+    <!--顶部导航栏  开始-->
+    {% for u in user %}
+    <div class="navbox">
+        <p style="position: absolute;left: 1180px;top: 5px;">欢迎您,{{ u.username }}</p>
+        {% if u.goods_pic %}
+        <img style="position: absolute;left: 1330px;top: 0px;width:120px; height:120px; border-radius:50%; overflow:hidden;width: 40px;height: 40px" src="/static/media/{{ u.goods_pic }}">
+            {% else %}
+        <img style="position: absolute;left: 1330px;top: 0px;width:120px; height:120px; border-radius:50%; overflow:hidden;width: 40px;height: 40px" src="/static/img/图片.png">
+        {% endif %}
+        <a href="/fire/login" >退出登录</a>
+    </div>
+    {% endfor %}
+    <!--顶部导航栏  结束-->
+    <!--中部部导航栏  开始-->
+    <div class="navbox2">
+        <p>城市消防安全系统</p>
+        <div class="box1" style="width: 180px;position: absolute;right: 1120px">
+            <img src="/static/images/nav/8.png" style="margin-left: 15px">
+            <a href="/fire/firesi" onclick="bot1how()" style="margin-left: 15px">数据管理</a>
+        </div>
+        <div class="box3" style="width: 180px;position: absolute;right: 900px">
+            <img src="/static/images/nav/2.png" style="margin-left: 18px">
+            <a href="/fire/visindex" style="margin-left: 18px">数据分析/可视化</a>
+        </div>
+        <div class="box4" style="width: 180px;position: absolute;right: 670px">
+            <img src="/static/images/nav/3.png" style="margin-left: 20px">
+            <a href="http://127.0.0.1:8000/#/" style="margin-left: 20px">地理信息可视化</a>
+        </div>
+        <div class="box5" style="width: 180px;position: absolute;right: 450px">
+            <img src="/static/images/nav/3.png" style="margin-left: 24px">
+            <a href="/fire/ruleindex" style="margin-left: 24px">救援方案管理</a>
+        </div>
+        <div class="box7" style="width: 180px;position: absolute;right: 250px">
+            <img src="/static/images/nav/5.png" style="margin-left: 5px">
+            <a href="javascript:void(0)" style="margin-left: 22px">系统设置</a>
+        </div>
+        <div class="box9" style="width: 180px;position: absolute;right: 0px">
+            <img src="/static/images/nav/7.png" style="margin-left: 24px">
+            <a href="/fire/personcenter" style="margin-left: 24px">个人中心</a>
+        </div>
+    </div>
+    <!--中部部导航栏  结束-->
+    <!--数据管理  开始-->
+    <div class="bottom_box1" id="bot1"  style="display: block;height: 600px">
+    <!--左边导航栏  开始-->
+    <div class="left_box" style="height: 400px">
+        <!--数据管理导航  开始-->
+        <div class="left_box1">
+            <img src="/static/images/1.png" class="img_box">
+            <p>救援方案管理</p>
+        </div>
+        <!--数据管理导航  开始-->
+        <!--导航栏1  开始-->
+        <div class="min_navbox">
+            <img src="/static/images/2.png" class="min_img">
+            <a href="/fire/ruleindex" >救援方案查询</a>
+        </div>
+        <!--导航栏1  结束-->
+        <!--导航栏2  开始-->
+        <div class="min_navbox" >
+            <img src="/static/images/2.png" class="min_img">
+            <a href="/fire/lev">火灾级别查询</a>
+        </div>
+        <!--导航栏2  结束-->
+        <!--导航栏3  开始-->
+        <div class="min_navbox">
+            <img src="/static/images/2.png" class="min_img">
+            <a href="/fire/cat"  >火灾类别查询</a>
+        </div>
+        <!--导航栏3  结束-->
+        <!--导航栏4  开始-->
+        <div class="min_navbox">
+            <img src="/static/images/2.png" class="min_img">
+            <a href="/fire/dec"  >方案查询</a>
+        </div>
+        <!--导航栏4  结束-->
+    </div>
+    <!--左下部导航栏  结束-->
+    <!--导航栏详细1  开始-->
+    <div class="nav_box1" style="display: block;height: 600px" id="nav_box1">
+        <div style="width: 1340px;height: 30px;background-color: #ffffff;border-bottom: solid 1px">
+            <p style="padding-top: 4px;letter-spacing: 3px;margin-left: 20px">救援方案查询</p>
+        </div>
+        <div style="width: 1340px;height: 50px;margin-left: 20px">
+        </div>
+        <div style="width: 1300px;height: 418px;float: right;background-color: #f6f6f6;background-color: #f6f6f6;border-style: solid;border-width: 1px;border-radius: 10px;margin-right: 20px">
+            <div style="width: 1340px;height: 40px" class="tablehead">
+            </div>
+            <div class="tab-content col-md-offset-1">
+                        <!-- 救援方案界面 -->
+                        <div class="tab-pane active " id="rule-1">
+                            <!-- 输入信息form表单 -->
+                            <form action="/cang/ajax_sb/" class="form-horizontal" role="form" method="post" id="firemsg">
+                                    {% csrf_token %}
+                                    {% for fild in index_form %}
+                                        <div class="form-group col-md-4" style="margin: 0;padding: 0">
+										<label class="col-md-3" style="line-height: 44px;padding: 0;">{{ fild.label }}</label>
+                                        <div class="col-md-5" style=" line-height: 44px;padding: 0;margin-top: 8px">
+                                            {{ fild }}
+										</div>
+									</div>
+                                    {% endfor %}
+									<div class="col-md-10" style="padding: 12px 14px; margin-left: 20px;background-color: #F8F8F8;border: 1px solid #EEEEEE;border-radius: 4px; text-align: right;overflow: hidden;">
+										<button type="button" id="ajax_sb" class="btn btn-group"  data-toggle="modal" data-target="#myModal" style="background-color: #417690; color: white;margin-right: 15px">提交</button>
+                                        <span id="error_msg"></span>
+									</div>
+								</form>
+                            <!-- 救援方案模态框 -->
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: 100px">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title">结果</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <span>火灾类型:</span>
+                                            <span class="ca"></span>
+                                            <br/>
+                                            <span>火灾级别:</span>
+                                            <span class="lev"></span>
+                                            <br/>
+                                            <span>决策方案:</span>
+                                            <div class="dec"></div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 救援方案模态框 结束 -->
+        </div>
+    </div>
+    <!--导航栏详细1  结束-->
+    </div>
+    <!--数据管理  结束-->
+
+</div>
+<!--总的大盒子  结束-->
+
+</body>
+ <script>
+        // 首页 ajax
+        $('#ajax_sb').on("click",function () {
+                $.ajax({
+                    url: '/fire/ajax_sb',
+                    type: 'POST',
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        "place":$("#place").val(),
+                        "area":$("#area").val(),
+                        "volume":$("#volume").val(),
+                        "call":$("#call").val(),
+                        "stage":$("#stage").val(),
+                        "fire":$("#fire").val(),
+                        "speed":$("#speed").val(),
+                        "trapped":$("#trapped").val(),
+                        "injured":$("#injured").val(),
+                        "death":$("#death").val(),
+                    },
+                    success: function (data) {
+                            console.log(data)
+                            $(".ca").text(data.cate)
+                            $(".lev").text(data.lev)
+                            $(".dec").text(data.dec)
+                    },
+                    error:function () {
+
+                    },
+                });
+            });
+
+        // 规则增加Ajax
+        $('#addrl').on("click", function () {
+                $.ajax({
+                    url: '/long/firemanage1_add/',
+                    type: 'POST',
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        "area":$("#id_area").val(),
+                        "volume":$("#id_volume").val(),
+                        "call":$("#id_call").val(),
+                        "stage":$("#id_stage").val(),
+                        "fire":$("#id_fire").val(),
+                        "speed":$("#id_speed").val(),
+                        "trapped":$("#id_trapped").val(),
+                        "injured":$("#id_injured").val(),
+                        "death":$("#id_death").val(),
+                        "lev":$("#id_lev").val(),
+                    },
+                    async: false,
+                    success: function (data) {
+                            console.log(data)
+                            window.location.reload(true);
+                    },
+                    error:function () {
+
+                    },
+                });
+        });
+
+        //
+    </script>
+</html>

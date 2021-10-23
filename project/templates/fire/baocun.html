@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <style>
+        *{
+            margin: 0 auto;
+            padding: 0px;
+        }
+        .box{
+            width: 100%;
+            height: 700px;
+            background-color: #f6f6f6;
+            position: relative;
+        }
+        .navbox{
+            width: 100%;
+            height: 20px;
+            background-color: #efefef;
+        }
+        .navbox p{
+            margin-left: 1340px;
+            color: #222222;
+        }
+        .navbox a{
+            float: right;
+            margin-top: -22px;
+            margin-right: 10px;
+            text-decoration: none;
+            color: #222222;
+        }
+        .navbox2{
+            width: 100%;
+            height: 50px;
+            position: relative;
+            background-color: #3875d7;
+        }
+        .navbox2 p{
+            color: #efefef;
+            float: left;
+            margin-top: 15px;
+            margin-left: 10px;
+            letter-spacing: 4px;
+        }
+        .box1{
+            width: 100px;
+            height: 100%;
+            position: absolute;
+            right: 100px;
+        }
+        .box2{
+            width: 100px;
+            height: 100%;
+            position: absolute;
+            right: 0px;
+        }
+        .box1 a{
+            text-decoration: none;
+            position: absolute;
+            top: 15px;
+            margin-left: 20px;
+            color: #f6f6f6;
+        }
+        .box2 a{
+            position: absolute;
+            top: 15px;
+            margin-left: 20px;
+            text-decoration: none;
+            color: #f6f6f6;
+        }
+        .left_box{
+            width: 180px;
+            height: 730px;
+            background-color: #f6f6f6;
+            border-style: inset;
+            border-color: #bbbbbb;
+            border-width: 0px 5px 0px 0px;
+            float: left;
+        }
+        .img_box{
+            width: 20px;
+            height: 20px;
+            margin-left: 30px;
+            margin-top: 20px;
+            float: left;
+        }
+        .left_box1{
+            background-color: #bbbbbb;
+            border-width: 0px 0px 2px 0px;
+            border-style: solid;
+            width: 180px;
+            height: 60px;
+        }
+        .left_box1 p{
+            float: left;
+            margin-left: 10px;
+            margin-top: 20px;
+            letter-spacing: 5px;
+        }
+        .left_min_box{
+            width: 180px;
+            height: 50px;
+            background-color: #bbbbbb;
+            border-width: 0px 0px 1px 0px;
+            border-style: solid;
+        }
+        .min_img{
+            width: 20px;
+            height: 20px;
+            margin-top: 15px;
+            margin-left: 20px;
+            float: left;
+        }
+        .left_min_box a{
+            float: left;
+            margin-left: 10px;
+            margin-top: 15px;
+            letter-spacing: 1px;
+            text-decoration: none;
+            color: #222222;
+        }
+        .firesi_box{
+            width: 1340px;
+            height: 750px;
+            background-color: #f6f6f6;
+            position: absolute;
+            top: 70px;
+            right: 0px;
+        }
+        .fight_box{
+            width: 1340px;
+            height: 750px;
+            background-color: #f6f6f6;
+            position: absolute;
+            top: 70px;
+            right: 0px;
+        }
+        .exper_box{
+            width: 1340px;
+            height: 750px;
+            background-color: #6DDCBD;
+            position: absolute;
+            top: 70px;
+            right: 0px;
+        }
+        .row_box{
+            width: 1340px;
+            height: 750px;
+            background-color: #6DDCBD;
+            position: absolute;
+            top: 70px;
+            right: 0px;
+        }
+        .tablehead thead tr th{
+            width: 80px;
+            height: 40px;
+            text-align: center;
+        }
+        .tablehead table{
+            border-bottom: 0px;
+            float: left;
+        }
+        #idData tr td{
+            width: 117.6px;
+            height: 40px;
+            text-align: center;
+        }
+        #myInput{
+            width: 200px;
+            height: 30px;
+            border-style: solid;
+            margin-top: 10px;
+            border-width: 1px;
+        }
+    </style>
+    <script>
+        function  firesishow() {
+            var a = document.getElementById("firesi");
+            var b = document.getElementById("fight");
+            var c = document.getElementById("exper");
+            var d = document.getElementById("row");
+            a.style.display = "block";
+            b.style.display = "none";
+            c.style.display = "none";
+            d.style.display = "none";
+        }
+        function fightshow() {
+            var a=document.getElementById("firesi");
+            var b=document.getElementById("fight");
+            var c=document.getElementById("exper");
+            var d=document.getElementById("row");
+            a.style.display="none";
+            b.style.display="block";
+            c.style.display="none";
+            d.style.display="none";
+        }
+        function expershow() {
+            var a=document.getElementById("firesi");
+            var b=document.getElementById("fight");
+            var c=document.getElementById("exper");
+            var d=document.getElementById("row");
+            a.style.display="none";
+            b.style.display="none";
+            c.style.display="block";
+            d.style.display="none";
+        }
+        function rowshow() {
+            var a=document.getElementById("firesi");
+            var b=document.getElementById("fight");
+            var c=document.getElementById("exper");
+            var d=document.getElementById("row");
+            a.style.display="none";
+            b.style.display="none";
+            c.style.display="none";
+            d.style.display="block";
+        }
+    </script>
+</head>
+<body >
+<!--总的大盒子  开始-->
+<div class="box">
+    <!--顶部导航栏  开始-->
+    <div class="navbox">
+        <p >欢迎你{{ username }}</p>
+        <a href="/fire/login" >退出登录</a>
+    </div>
+     <!--顶部导航栏  结束-->
+     <!--中部部导航栏  开始-->
+    <div class="navbox2">
+        <p>城市消防安全系统</p>
+        <div class="box1">
+            <a href="javascript:void(0)">数据查看</a>
+        </div>
+        <div class="box2" >
+            <a href="/fire/personcenter" >修改密码</a>
+        </div>
+    </div>
+    <!--中部部导航栏  结束-->
+    <!--左边导航栏  开始-->
+    <div class="left_box">
+        <!--数据管理  开始-->
+        <div class="left_box1">
+            <img src="/static/img/1.png" class="img_box">
+            <p>数据管理</p>
+        </div>
+        <!--数据管理  开始-->
+        <!--火灾基本情况导航栏  开始-->
+        <div class="left_min_box">
+            <img src="/static/img/2.png" class="min_img">
+            <a href="javascript:void(0)"  onmousemove="firesishow()">火灾基本情况</a>
+        </div>
+        <!--火灾基本情况导航栏  结束-->
+        <!--作战指挥情况导航栏  开始-->
+        <div class="left_min_box">
+            <img src="/static/img/2.png" class="min_img">
+            <a href="javascript:void(0)"  onmousemove="fightshow()">作战指挥情况</a>
+        </div>
+        <!--作战指挥情况导航栏  结束-->
+        <!--经验总结分析导航栏  开始-->
+        <div class="left_min_box">
+            <img src="/static/img/2.png" class="min_img">
+            <a href="javascript:void(0)"  onmousemove="expershow()">经验总结分析</a>
+        </div>
+        <!--经验总结分析导航栏  结束-->
+        <!--规则信息管理导航栏  开始-->
+        <div class="left_min_box">
+            <img src="/static/img/2.png" class="min_img">
+            <a href="javascript:void(0)"  onmousemove="rowshow()">规则信息管理</a>
+        </div>
+        <!--规则信息管理导航栏  结束-->
+    </div>
+    <!--左下部导航栏  结束-->
+    <!--火灾基本情况  开始-->
+    <div class="firesi_box" id="firesi" >
+        <div style="width: 1340px;height: 30px;background-color: coral">
+            <p style="padding-top: 4px;letter-spacing: 3px">火灾基本情况</p>
+        </div>
+        <div style="width: 1340px;height: 50px;background-color: #6DDCBD">
+            <form action="/fire/search" method="post" >
+                {% csrf_token %}
+                <input type="text" name="search" placeholder="请输入id搜索" id="myInput">
+                <input type="submit" value="搜索">
+            </form>
+        </div>
+        <div style="width: 1340px;height: 600px;background-color: #f6f6f6">
+            <div style="width: 1340px;height: 40px" class="tablehead">
+                <table border="1" width="1200px" height="500px">
+                    <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            火灾标题
+                        </th>
+                        <th>
+                            日期
+                        </th>
+                        <th>
+                            时间
+                        </th>
+                        <th>
+                            主要可燃物
+                        </th>
+                        <th>
+                            火灾类型
+                        </th>
+                        <th>
+                            火灾级别
+                        </th>
+                        <th>
+                            地址
+                        </th>
+                        <th>
+                            详细地址
+                        </th>
+                        <th>
+                           消防设施情况
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <table id="idData" width="1200px" height="300px"  style="margin-top: 2px" border="1" >
+                {% load pagination_tags %}
+                {% autopaginate temp 5 %}
+                {% for item in temp  %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.date }}</td>
+                    <td>{{ item.time }}</td>
+                    <td>{{ item.major_th }}</td>
+                    <td>{{ item.fire_type }}</td>
+                    <td>{{ item.fire_level }}</td>
+                    <td>{{ item.place }}</td>
+                    <td>{{ item.detal_place }}</td>
+                    <td>{{ item.fire_build }}</td>
+                </tr>
+                {% endfor %}
+              </table>
+        </div>
+        <div style="width: 500px;margin-top: -100px">
+         {% paginate %}
+    </div>
+    </div>
+    <!--火灾基本情况  结束-->
+    <!--作战指挥情况  开始-->
+    <div class="fight_box" id="fight" >
+        <div style="width: 1340px;height: 30px;background-color: coral">
+            <p style="padding-top: 4px;letter-spacing: 3px">作战指挥情况</p>
+        </div>
+        <div style="width: 1340px;height: 50px;background-color: #6DDCBD">
+            <form action="/fire/search" method="post" >
+                {% csrf_token %}
+                <input type="text" name="search" placeholder="请输入id搜索" id="myInput">
+                <input type="submit" value="搜索">
+            </form>
+        </div>
+        <div style="width: 1340px;height: 600px;background-color: #f6f6f6">
+            <div style="width: 1340px;height: 40px" class="tablehead">
+                <table border="1" width="1200px" height="500px">
+                    <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            被困人员
+                        </th>
+                        <th>
+                            侦察情况
+                        </th>
+                        <th>
+                            火灾区域
+                        </th>
+                        <th>
+                            火灾扑救战术
+                        </th>
+                        <th>
+                            火灾异变
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <table id="idData" width="1200px" height="300px"  style="margin-top: 2px" border="1" >
+                {% load pagination_tags %}
+                {% autopaginate temp2 5 %}
+                {% for item in temp2  %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.person }}</td>
+                    <td>{{ item.see_com }}</td>
+                    <td>{{ item.area }}</td>
+                    <td>{{ item.fire_zs }}</td>
+                    <td>{{ item.fire_change }}</td>
+                </tr>
+                {% endfor %}
+              </table>
+              </table>
+        </div>
+    <div style="width: 500px;margin-top: -100px">
+         {% paginate %}
+    </div>
+    </div>
+    <!--作战指挥情况  结束-->
+    <!--经验总结分析  开始-->
+    <div class="exper_box" style="display: none" id="exper">
+        <div style="width: 1340px;height: 30px;background-color: coral">
+            <p style="padding-top: 4px;letter-spacing: 3px">经验总结分析</p>
+        </div>
+        <div style="width: 1340px;height: 50px;background-color: #6DDCBD">
+            <form action="/fire/search" method="post" >
+                {% csrf_token %}
+                <input type="text" name="search" placeholder="请输入id搜索" id="myInput">
+                <input type="submit" value="搜索">
+            </form>
+        </div>
+        <div style="width: 1340px;height: 600px;background-color: #f6f6f6">
+            <div style="width: 1340px;height: 40px" class="tablehead">
+                <table border="1" width="1200px" height="500px">
+                    <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            火灾经济损失
+                        </th>
+                        <th>
+                            起火原因
+                        </th>
+                        <th>
+                            死亡人数
+                        </th>
+                        <th>
+                            轻伤人数
+                        </th>
+                        <th>
+                            重伤人数
+                        </th>
+                        <th>
+                            本地死亡人数
+                        </th>
+                        <th>
+                            外地死亡人数
+                        </th>
+                        <th>
+                            男性死亡人数
+                        </th>
+                        <th>
+                           女性死亡人数
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <table id="idData" width="1200px" height="300px"  style="margin-top: 2px" border="1" >
+              </table>
+        </div>
+    </div>
+    <!--经验总结分析  结束-->
+    <!--规则信息管理  开始-->
+    <div class="row_box" id="row" style="display: none">
+
+    </div>
+    <!--规则信息管理  结束-->
+</div>
+<!--总的大盒子  结束-->
+</body>
+</html>

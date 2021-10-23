@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <link href="/static/css/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <style>
+        .a-box{
+            font-size: 15px;
+            color: #222222;
+            text-decoration: none;
+        }
+        .box{
+            width: 400px;
+            height: 500px;
+            background-color: #efefef;
+            position: absolute;
+            top: 60px;
+            right: 550px;
+            display: none;
+        }
+    </style>
+    <script>
+        function showD(elementId) {
+            var el=document.getElementById(elementId);
+            el.style.display="block"
+        }
+        function hideD(elementId) {
+            var el=document.getElementById(elementId);
+            el.style.display="none"
+        }
+    </script>
+    <style>
+        .top_box{
+            width: 100%;
+            height: 52px;
+            background-color: #417690;
+            position: relative;
+        }
+        .top_box p{
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #f5dd5d;
+            position: absolute;
+            left: 20px;
+            top: 8px;
+        }
+        .right_box{
+            width: 220px;
+            height: 20px;
+            position: absolute;
+            right: 0px;
+            top: 16px;
+
+        }
+        .right_box a{
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .table-box{
+            width: 1400px;
+            height: 300px;
+            border-style: solid;
+            border-color: #bbbbbb;
+            position: absolute;
+            right: 10px;
+            top: 120px;
+        }
+    </style>
+</head>
+<body>
+<div class="top_box">
+    <p>用户管理</p>
+    <div class="right_box">
+        <a href="javascript:void(0)">
+            欢迎您{{ username }}
+        </a>
+        <span style="color: #ffffff">/</span>
+        <a href="/fire/index2">
+            返回
+        </a>
+    </div>
+</div>
+<div style="position: absolute;left: 120px;top: 60px">
+    <a href="/fire/user_save" style="float:left;margin-left: 10px" class="btn btn-default btn-lg active" role="button">增加用户</a>
+</div>
+<div class="table-box">
+<table class="table table-hover">
+  <thead>
+        <tr>
+            <th style="text-align: center">
+                用户id
+            </th>
+            <th style="text-align: center">
+                头像
+            </th>
+            <th style="text-align: center">
+                用户名
+            </th>
+            <th style="text-align: center">
+                密码
+            </th>
+            <th style="text-align: center">
+                年龄
+            </th>
+            <th style="text-align: center">
+                性别
+            </th>
+            <th style="text-align: center">
+                电话号码
+            </th>
+            <th style="text-align: center">
+                操作
+            </th>
+        </tr>
+  </thead>
+        <tr>
+        {% for item in page %}
+            <td style="text-align: center;vertical-align: middle;">{{ item.0 }}</td>
+            <td style="text-align: center;vertical-align: middle;">
+                {% if item.3 %}
+                <img style="width: 40px;height: 40px;" src="/static/media/{{ item.3 }}">
+                {% endif %}
+            </td>
+            <td style="text-align: center;vertical-align: middle;">{{ item.1 }}</td>
+            <td style="text-align: center;vertical-align: middle;">{{ item.2 }}</td>
+            <td style="text-align: center;vertical-align: middle;">{{ item.4 }}</td>
+            <td style="text-align: center;vertical-align: middle;">{{ item.5 }}</td>
+            <td style="text-align: center;vertical-align: middle;">{{ item.6 }}</td>
+            <td style="text-align: center;vertical-align: middle;">
+                <form action="/fire/delete?id={{ item.0 }}" method="post">
+                    {% csrf_token %}    <!-- 防跨站伪造令牌 -->
+                    <img src="/static/img/3.png" style="width: 20px;height: 20px;float: left;margin-top: 7px;margin-left: 20px">
+                    <button style="float:left;" type="submit" class="btn btn-danger" name="name">删除</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+<div style="width: 800px;height: 200px;position: absolute;top: 400px;left: 350px">
+        <div style="width: 200px;height: 200px;position: absolute;top: 0px;left: -300px;">
+            共{{ num }}页
+            跳转到第<input id="in" type="number" style="width: 50px">页
+            <button id="btn" style="position: absolute;top: 0px;left: 165px;width: 60px">跳转</button>
+            <script type="text/javascript">
+                $("#btn").click(function () {
+                var num = $("#in").val();
+                console.log(num);
+                if(num<=0 || num>{{ num }}){
+                    alert('请正确输入页码');
+                    $("#in").val('');
+                }else{
+                    window.location.href="/fire/firesi"+num;
+                }
+            })
+            </script>
+        </div>
+        <div style="position: absolute;top: 0px;left: 180px;">
+            {#判断当前页面是否有上一页#}
+            {% if page.has_previous %}
+            {#    如果存在上一页点击'<'可以跳转到上一页#}
+                <a href="/fire/users{{ page.previous_page_number }}" aria-label="Previous" style="font-size: 20px">
+                    <span aria-hidden="true">&laquo</span>上一页
+                </a>
+            {% endif %}
+            {#循环遍历出页码列表#}
+            {% for foo in page.paginator.page_range %}
+                {% if pindex == page.number %}
+                    <a href="/fire/users{{ foo }}"  style="font-size: 20px">{{ foo }}</a>
+                    {% else %}
+                    <a href="/fire/users{{ foo }}"  style="font-size: 20px;letter-spacing: 10px">{{ foo }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {#判断是否存在下一页#}
+            {% if page.has_next %}
+                <a href="/fire/users{{ page.next_page_number }}" aria-label="Next" style="font-size: 20px">
+                    下一页<span aria-hidden="true">&raquo</span>
+                </a>
+            {% endif %}
+        </div>
+        </div>
+</table>
+</div>
+
+</body>
+</html>

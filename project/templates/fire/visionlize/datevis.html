@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>火灾基本情况</title>
+    <link href="/static/css/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/static/css/firesi.css" type="text/css">
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/static/js/index.js"></script>
+    <style>
+        .autocut {
+            width:100px;
+            height: 30px;
+            overflow:hidden;
+            white-space:nowrap;
+            text-overflow:ellipsis;
+            -o-text-overflow:ellipsis;
+            -icab-text-overflow: ellipsis;
+            -khtml-text-overflow: ellipsis;
+            -moz-text-overflow: ellipsis;-webkit-text-overflow: ellipsis;
+    }  
+    </style>
+    <script type="text/javascript">
+    function getPage() {
+        var pageNum = $('#pageNum').val();
+        if(pageNum >= 1 && pageNum <= {{ Page.paginator.num_pages }}){
+            location.assign("http://127.0.0.1:8000/fire/firesi?page="+pageNum)
+        }
+        else{
+            alert('请输入正确的页码!')
+        }
+    }
+    </script>
+</head>
+<body >
+<!--总的大盒子  开始-->
+<div class="box" style="height: 800px;background-color: #f6f6f6">
+    <!--顶部导航栏  开始-->
+    {% for u in user %}
+    <div class="navbox">
+        <p style="position: absolute;left: 1180px;top: 5px;">欢迎您,{{ u.username }}</p>
+        {% if u.goods_pic %}
+        <img style="position: absolute;left: 1330px;top: 0px;width:120px; height:120px; border-radius:50%; overflow:hidden;width: 40px;height: 40px" src="/static/media/{{ u.goods_pic }}">
+            {% else %}
+        <img style="position: absolute;left: 1330px;top: 0px;width:120px; height:120px; border-radius:50%; overflow:hidden;width: 40px;height: 40px" src="/static/img/图片.png">
+        {% endif %}
+        <a href="/fire/login" >退出登录</a>
+    </div>
+    {% endfor %}
+    <!--顶部导航栏  结束-->
+    <!--中部部导航栏  开始-->
+    <div class="navbox2">
+        <p>城市消防安全系统</p>
+        <div class="box1" style="width: 180px;position: absolute;right: 1120px">
+            <img src="/static/images/nav/8.png" style="margin-left: 15px">
+            <a href="javascript:void(0)" onclick="bot1how()" style="margin-left: 15px">数据管理</a>
+        </div>
+        <div class="box3" style="width: 180px;position: absolute;right: 900px">
+            <img src="/static/images/nav/2.png" style="margin-left: 18px">
+            <a href="javascript:void(0)" style="margin-left: 18px">数据分析/可视化</a>
+        </div>
+        <div class="box4" style="width: 180px;position: absolute;right: 670px">
+            <img src="/static/images/nav/3.png" style="margin-left: 20px">
+            <a href="http://localhost:8088/index" style="margin-left: 20px">地理信息可视化</a>
+        </div>
+        <div class="box5" style="width: 180px;position: absolute;right: 450px">
+            <img src="/static/images/nav/3.png" style="margin-left: 24px">
+            <a href="/fire/ruleindex" style="margin-left: 24px">救援方案管理</a>
+        </div>
+        <div class="box7" style="width: 180px;position: absolute;right: 250px">
+            <img src="/static/images/nav/5.png" style="margin-left: 5px">
+            <a href="javascript:void(0)" style="margin-left: 22px">系统设置</a>
+        </div>
+        <div class="box9" style="width: 180px;position: absolute;right: 0px">
+            <img src="/static/images/nav/7.png" style="margin-left: 24px">
+            <a href="/fire/personcenter" style="margin-left: 24px">个人中心</a>
+        </div>
+    </div>
+    <!--中部部导航栏  结束-->
+    <!--数据管理  开始-->
+    <div class="bottom_box1" id="bot1"  style="display: block;height: 600px">
+    <!--左边导航栏  开始-->
+    <div class="left_box" style="height: 400px">
+        <!--数据管理导航  开始-->
+        <div class="left_box1">
+            <img src="/static/images/1.png" class="img_box">
+            <p>数据管理</p>
+        </div>
+        <!--数据管理导航  开始-->
+        <!--导航栏1  开始-->
+        <div class="min_navbox">
+            <img src="/static/images/2.png" class="min_img">
+            <a href="/fire/datevis" >火灾日期数量统计</a>
+        </div>
+        <!--导航栏1  结束-->
+        <!--导航栏2  开始-->
+        <div class="min_navbox" >
+            <img src="/static/images/2.png" class="min_img">
+            <a href="/fire/typevis">火灾级别和类型</a>
+        </div>
+        <!--导航栏2  结束-->
+        <!--导航栏3  开始-->
+        <div class="min_navbox">
+            <img src="/static/images/2.png" class="min_img">
+            <a href="/fire/pronvis"  >火灾省份</a>
+        </div>
+        <!--导航栏3  结束-->
+    </div>
+    <!--左下部导航栏  结束-->
+    <!--导航栏详细1  开始-->
+    <div class="nav_box1" style="display: block;height: 600px;position: absolute;left: 200px" id="nav_box1">
+            <img src="/static/img/01.png" style="width: 800px;height: 600px;position: absolute;left: 200px">
+    </div>
+    <!--导航栏详细1  结束-->
+    </div>
+    <!--数据管理  结束-->
+
+</div>
+<!--总的大盒子  结束-->
+
+</body>
+</html>

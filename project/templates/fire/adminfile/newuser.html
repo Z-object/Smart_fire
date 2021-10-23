@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>增加用户</title>
+    <script type="text/javascript" src="/static/js/jquery.js"></script>
+    <link href="/static/css/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <style>
+        .box{
+            width: 400px;
+            height: 550px;
+            margin: 0 auto;
+            margin-top: 80px;
+            background-color: #efefef;
+            position: relative;
+        }
+        .box1{
+            width: 400px;
+            height: 50px;
+            background-color: #417690;
+        }
+        .box1 p{
+            text-align: center;
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: bold;
+            padding-top: 15px;
+            letter-spacing: 20px;
+        }
+        input::placeholder{
+            color: #122b40;
+        }
+        .input1{
+            width: 200px;
+            height: 30px;
+            position: absolute;
+            top: 140px;
+            left: 90px;
+        }
+        .input2{
+            width: 200px;
+            height: 30px;
+            position: absolute;
+            top: 200px;
+            left: 90px;
+        }
+        .input3{
+            width: 200px;
+            height: 30px;
+            position: absolute;
+            top: 260px;
+            left: 90px;
+        }
+        .input4{
+            width: 200px;
+            height: 30px;
+            position: absolute;
+            top: 320px;
+            left: 90px;
+        }
+        .input5{
+            width: 200px;
+            height: 30px;
+            position: absolute;
+            top: 370px;
+            left: 90px;
+        }
+        .input6{
+            width: 80px;
+            height: 40px;
+            background-color: #79aec8;
+            position: absolute;
+            top: 420px;
+            left: 90px;
+            color: #ffffff;
+        }
+        .astyle{
+            position: absolute;
+            top: 480px;
+            left: 100px;
+        }
+        .msg1{
+            position: absolute;
+            top: 115px;
+            left: 90px;
+            font-size: 15px;
+        }
+        .msg2{
+            position: absolute;
+            top: 180px;
+            left: 90px;
+            font-size: 15px;
+        }
+        .msg3{
+            position: absolute;
+            top: 238px;
+            left: 90px;
+            font-size: 15px;
+        }
+        .msg4{
+            position: absolute;
+            top: 350px;
+            left: 90px;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body style="background-image: url('/static/img/backimg.jpg');background-repeat: no-repeat;background-size:100% ">
+<div class="box" >
+<div class="box1">
+<p>新增用户</p>
+</div>
+    <form action="/fire/save_user" method="post" id="laobiao" enctype="multipart/form-data">
+        {% csrf_token %}    <!-- 防跨站伪造令牌 -->
+        <div style="color: red;display: {% if error1 %} block {% endif %} none;" class="msg1" >{{ error1 }}</div>
+        <div style="color: red;display: {% if error %} block {% endif %} none;" class="msg1">{{ error }}</div>
+        <p style="position: absolute;left: 90px;top: 50px">请上传头像</p>
+        <input style="position: absolute;left: 90px;top: 90px" type="file" name="pic">
+        <input type="text" id="username" value="{{ username }}" name="username" placeholder="请输入用户名" class="input1"></br>
+        <div style="color: red;display: {% if error2 %} block {% endif %} none;" class="msg2">{{ error2 }}</div>
+        <input type="password" id="password" value="{{ password }}" name="password" placeholder="请输入密码" class="input2"></br>
+        <div style="color: red;display: {% if error3 %} block {% endif %} none;" class="msg3"  >{{ error3 }}</div>
+        <input type="text" name="age"  value="{{ age }}" placeholder="请输入年龄" class="input3"></br>
+        <select class="input4" name="sex">
+            <option>男</option>
+            <option>女</option>
+        </select>
+        <div style="color: red;display: {% if error4 %} block {% endif %} none;" class="msg4" >{{ error4 }}</div>
+        <input type="text" name="phone" value="{{ phone }}" placeholder="请输入电话号码" class="input5"></br>
+        <input  type="submit" value="增加" class="input6">
+        <a href="/fire/users" style="position: absolute;top: 420px;left: 220px;height: 42px;" class="btn btn-default btn-lg active" role="button">返回</a>
+    </form>
+</div>
+</body>
+</html>

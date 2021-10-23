@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- 上述meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" href="/static">
+    <style>
+        .box{
+            width: 600px;
+            height: 450px;
+            margin: 0 auto;
+            margin-top: 120px;
+            background-color: #efefef;
+            position: relative;
+        }
+        .box1{
+            width: 600px;
+            height: 100px;
+            background-color: #417690;
+        }
+        .box1 p{
+            text-align: center;
+            color: #ffffff;
+            font-size: 30px;
+            font-weight: bold;
+            padding-top: 25px;
+            letter-spacing: 20px;
+        }
+        .lab1{
+            position: absolute;
+            top: 150px;
+            left: 50px;
+            font-size: 20px;
+        }
+        .input1{
+            width: 500px;
+            height: 30px;
+            position: absolute;
+            top: 190px;
+            left: 50px;
+        }
+        .lab2{
+            position: absolute;
+            top: 240px;
+            left: 50px;
+            font-size: 20px;
+        }
+        .input2{
+            width: 500px;
+            height: 30px;
+            position: absolute;
+            top: 280px;
+            left: 50px;
+        }
+        .input3{
+            width: 100px;
+            height: 40px;
+            background-color: #79aec8;
+            position: absolute;
+            top: 340px;
+            left: 100px;
+            color: #ffffff;
+        }
+        .box2{
+            width: 100px;
+            height: 40px;
+            background-color: #79aec8;
+            border-style: outset;
+            border-width:2px ;
+            border-color: buttonface;
+            border-image:initial ;
+            position: absolute;
+            left: 250px;
+            top: 340px;
+        }
+        .box2 a{
+            width: 84px;
+            height: 34px;
+            outline: none;
+            color: #ffffff;
+            text-decoration: none;
+            position: absolute;
+            right: -5px;
+            top: 10px;
+            vertical-align: center;
+            font: 400 13.3333px Arial;
+        }
+        .box3{
+            width: 100px;
+            height: 40px;
+            background-color: #79aec8;
+            border-style: outset;
+            border-width:2px ;
+            border-color: buttonface;
+            border-image:initial ;
+            position: absolute;
+            top: 340px;
+            right: 100px;
+        }
+        .box3 a{
+            width: 84px;
+            height: 34px;
+            outline: none;
+            color: #ffffff;
+            text-decoration: none;
+            position: absolute;
+            right: -23px;
+            top: 10px;
+            vertical-align: center;
+            font: 400 13.3333px Arial;
+        }
+    </style>
+</head>
+<body>
+<!--登录栏 开始-->
+<div class="box">
+<div class="box1">
+<p>欢迎登陆城市消防平台</p>
+</div>
+    <div style="border-color: #79aec8;border-style: solid;width: 600px;height: 350px">
+    <form action="/fire/login1" method="post">
+        {% csrf_token %}    <!-- 防跨站伪造令牌 -->
+        <label for="in1" class="lab1">用户名:</label>
+        <div style="font-size: 20px;color: #ba2121;display: {% if error1 %} none {% endif %} block;position: absolute;top: 150px;left: 150px ">{{ error1 }}</div>
+        <div style="font-size: 20px;color: #ba2121;display: {% if error3 %} none {% endif %} block;position: absolute;top: 150px;left: 150px ">{{ error3 }}</div>
+        <input type="text" name="username" id="in1" class="input1" value="{{ username }}"></br>
+        <label for="in2" class="lab2">密码:</label>
+        <div style="font-size: 20px;color: #ba2121;display: {% if error1 %} none {% endif %} block;position: absolute;top: 240px;left: 150px ">{{ error2 }}</div>
+        <input type="password" name="password" id="in2" class="input2"></br>
+        <input type="submit" value="登录" class="input3">
+    <div class="form-group">
+                    {{ captcha.label_tag }}
+                    {{ captcha }}
+                  </div>
+    </form>
+    <div class="box2">
+        <a href="/fire/adindex">管理员登录</a>
+    </div>
+    <div class="box3">
+        <a href="/fire/register1">注册</a>
+    </div>
+    </div>
+</div>
+<!--登录栏 结束-->
+
+</body>
+</html>

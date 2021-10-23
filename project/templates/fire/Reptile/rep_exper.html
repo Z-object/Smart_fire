@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>经验总结分析爬取</title>
+    <link href="/static/css/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/static/css/firesi.css" type="text/css">
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/static/js/index.js"></script>
+</head>
+<body >
+<!--总的大盒子  开始-->
+<div class="box" style="height: 800px;background-color: #f6f6f6">
+    <!--顶部导航栏  开始-->
+    {% for u in user %}
+    <div class="navbox">
+        <p style="position: absolute;left: 1180px;top: 5px;">欢迎您,{{ u.username }}</p>
+        {% if u.goods_pic %}
+        <img style="position: absolute;left: 1330px;top: 0px;width:120px; height:120px; border-radius:50%; overflow:hidden;width: 40px;height: 40px" src="/static/media/{{ u.goods_pic }}">
+            {% else %}
+        <img style="position: absolute;left: 1330px;top: 0px;width:120px; height:120px; border-radius:50%; overflow:hidden;width: 40px;height: 40px" src="/static/img/图片.png">
+        {% endif %}
+        <a href="/fire/login" >退出登录</a>
+    </div>
+    {% endfor %}
+    <!--顶部导航栏  结束-->
+    <!--中部部导航栏  开始-->
+    <div class="navbox2">
+        <p>城市消防安全系统</p>
+        <div class="box1" style="width: 154px;position: absolute;right: 1200px">
+            <img src="/static/images/nav/1.png" style="margin-left: 15px">
+            <a href="/fire/index2" onclick="bot1how()" style="margin-left: 15px">数据管理</a>
+        </div>
+        <div class="box2" style="width: 154px;position: absolute;right: 1000px">
+            <img src="/static/images/nav/1.png" style="margin-left: 20px">
+            <a href="javascript:void(0)" style="margin-left: 20px">数据采集</a>
+        </div>
+        <div class="box3" style="width: 154px;position: absolute;right: 800px">
+            <img src="/static/images/nav/2.png" style="margin-left: 18px">
+            <a href="javascript:void(0)" style="margin-left: 18px">数据分析/可视化</a>
+        </div>
+        <div class="box4" style="width: 154px;position: absolute;right: 600px">
+            <img src="/static/images/nav/3.png" style="margin-left: 20px">
+            <a href="javascript:void(0)" style="margin-left: 20px">地理信息可视化</a>
+        </div>
+        <div class="box5" style="width: 154px;position: absolute;right: 400px">
+            <img src="/static/images/nav/3.png" style="margin-left: 24px">
+            <a href="javascript:void(0)" style="margin-left: 24px">救援方案管理</a>
+        </div>
+        <div class="box7" style="width: 154px;position: absolute;right: 200px">
+            <img src="/static/images/nav/5.png" style="margin-left: 22px">
+            <a href="javascript:void(0)" style="margin-left: 22px">系统设置</a>
+        </div>
+        <div class="box9" style="width: 154px">
+            <img src="/static/images/nav/7.png" style="margin-left: 24px">
+            <a href="/fire/users" style="margin-left: 24px">用户管理</a>
+        </div>
+    </div>
+    <!--中部部导航栏  结束-->
+    <!--数据采集  开始-->
+    <div class="bottom_box1" id="bot1"  style="display: block;height: 600px">
+    <!--左边导航栏  开始-->
+    <div class="left_box" style="height: 400px">
+        <!--数据管理导航  开始-->
+        <div class="left_box1">
+            <img src="/static/images/1.png" class="img_box">
+            <p>数据采集</p>
+        </div>
+        <!--数据管理导航  开始-->
+        <!--导航栏1  开始-->
+        <div class="min_navbox">
+            <img src="/static/images/2.png" class="min_img" style="margin-left: 15px">
+            <a href="/fire/rep_index" >综合数据爬取</a>
+        </div>
+        <!--导航栏1  结束-->
+        <!--导航栏2  开始-->
+        <div class="min_navbox">
+            <img src="/static/images/2.png" class="min_img" style="margin-left: 15px">
+            <a href="/fire/rep_firesi">火灾基本情况爬取</a>
+        </div>
+        <!--导航栏2  结束-->
+        <!--导航栏3  开始-->
+        <div class="min_navbox">
+            <img src="/static/images/2.png" class="min_img" style="margin-left: 15px">
+            <a href="/fire/rep_fight"  >火灾作战指挥爬取</a>
+        </div>
+        <!--导航栏3  结束-->
+        <!--导航栏4  开始-->
+        <div class="min_navbox">
+            <img src="/static/images/2.png" class="min_img" style="margin-left: 15px">
+            <a href="javascript:void(0)">火灾经验总结爬取</a>
+        </div>
+        <!--导航栏4  结束-->
+    </div>
+    <!--左下部导航栏  结束-->
+    <!--经验总结分析爬取  开始-->
+    <div class="nav_box1" style="height: 700px" id="nav_box1">
+        <div style="width: 1340px;height: 30px;background-color: #ffffff;border-bottom: solid 1px;">
+            <p style="padding-top: 4px;letter-spacing: 3px;margin-left: 20px;color: #222222;font-weight: bold">请选择字段爬取</p>
+        </div>
+        <form class="form-inline">
+            <!--第一列  开始-->
+            <div class="form-group" style="margin-top: 40px;margin-left: 90px">
+                <label for="exampleInputName2">起火原因:</label>
+                <input type="text" class="form-control" style="width: 175px">
+            </div>
+            <div class="form-group" style="margin-top: 40px;margin-left: 40px">
+                <label for="exampleInputEmail2">经济损失:</label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="form-group" style="margin-top: 40px;margin-left: 40px">
+                <label for="exampleInputEmail2">补偿情况:</label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="form-group" style="margin-top: 40px;margin-left: 40px">
+                <label for="exampleInputEmail2">责任处理:</label>
+                <input type="email" class="form-control">
+            </div>
+            <!--第一列  结束-->
+            <!--第二列  开始-->
+            <div class="form-group" style="margin-top: 40px;margin-left: 90px">
+                <label for="exampleInputName2">来源:</label>
+                <input type="text" class="form-control" id="exampleInputName2" placeholder="爬取网址">
+            </div>
+            <div class="form-group" style="margin-top: 40px;margin-left: 40px">
+                <label for="exampleInputEmail2">死亡人数:</label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="form-group" style="margin-top: 40px;margin-left: 40px">
+                <label for="exampleInputEmail2">重伤人数:</label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="form-group" style="margin-top: 40px;margin-left: 40px">
+                <label for="exampleInputEmail2">轻伤人数:</label>
+                <input type="email" class="form-control">
+            </div>
+            <!--第二列  结束-->
+            <!--第三列  开始-->
+            <div class="form-group" style="margin-top: 40px;margin-left: 90px">
+                <label for="exampleInputName2">本地死亡人数:</label>
+                <input type="text" class="form-control" id="exampleInputName2" style="width: 146px">
+            </div>
+            <div class="form-group" style="margin-top: 40px;margin-left: 40px">
+                <label for="exampleInputEmail2">外地死亡人数:</label>
+                <input type="text" class="form-control" style="width: 170px">
+            </div>
+            <div class="form-group" style="margin-top: 40px;margin-left: 40px">
+                <label for="exampleInputEmail2">男性死亡人数:</label>
+                <input type="text" class="form-control" style="width: 175px">
+            </div>
+            <div class="form-group" style="margin-top: 40px;margin-left: 40px">
+                <label for="exampleInputEmail2">女性死亡人数:</label>
+                <input type="email" class="form-control" style="width: 170px">
+            </div>
+            <!--第三列  结束-->
+            <!--第四列  开始-->
+            <div class="form-group" style="margin-top: 40px;margin-left: 90px">
+                <label for="exampleInputName2">0~14岁死亡人数:</label>
+                <input type="text" class="form-control" id="exampleInputName2" style="width: 130px">
+            </div>
+            <div class="form-group" style="margin-top: 40px;margin-left: 40px">
+                <label for="exampleInputEmail2">15~60岁死亡人数:</label>
+                <input type="text" class="form-control" style="width: 145px">
+            </div>
+            <div class="form-group" style="margin-top: 40px;margin-left: 40px">
+                <label for="exampleInputEmail2">60岁以上死亡人数:</label>
+                <input type="text" class="form-control" style="width: 143px">
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg active" style="margin-top: 35px;margin-left: 130px">开始爬取</button>
+            <!--第四列  结束-->
+        </form>
+    </div>
+    <!--经验总结分析爬取  结束-->
+
+    <!--数据采集  结束-->
+
+</div>
+<!--总的大盒子  结束-->
+
+</body>
+</html>

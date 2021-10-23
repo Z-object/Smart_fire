@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案例管理</title>
+    <link href="/static/css/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <style>
+        .top_box{
+            width: 100%;
+            height: 52px;
+            background-color: #417690;
+            position: relative;
+        }
+        .top_box p{
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #f5dd5d;
+            position: absolute;
+            left: 20px;
+            top: 8px;
+        }
+        .right_box{
+            width: 220px;
+            height: 20px;
+            position: absolute;
+            right: 0px;
+            top: 16px;
+
+        }
+        .right_box a{
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="top_box">
+    <p>作战指挥情况案例详情</p>
+    <div class="right_box">
+        <a href="javascript:void(0)">
+            欢迎您{{ username }}
+        </a>
+        <span style="color: #ffffff">/</span>
+        <a href="/fire/fight">
+            返回
+        </a>
+    </div>
+</div>
+<form action="/fire/updatefight"  method="post">
+{% csrf_token %}    <!-- 防跨站伪造令牌 -->
+    <table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>
+            字段名
+        </th>
+        <th>
+            字段值
+        </th>
+    </tr>
+    </thead>
+        {% for f in f1 %}
+            <tr>
+            <td>
+                id
+            </td>
+             <td>
+                 {{ f.id }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                接警时间
+            </td>
+            <td>
+                {{ f.time }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                被困人数
+            </td>
+            <td>
+                {{ f.person }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                侦察情况
+            </td>
+            <td>
+                {{ f.see_com }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾区域
+            </td>
+            <td>
+                {{ f.area }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾扑救战术
+            </td>
+            <td>
+                {{ f.fire_zs }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾异变
+            </td>
+            <td>
+                {{ f.fire_change }}
+            </td>
+        </tr>
+            <thead>
+            <tr>
+                <td>
+                    <b>第一支消防队到场情况</b>
+                </td>
+            </tr>
+            </thead>
+            <tr>
+            <td>
+                id
+            </td>
+             <td>
+                 {{ f.team.id }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾区域
+            </td>
+            <td>
+                {{ f.team.area }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾发展阶段
+            </td>
+            <td>
+                {{ f.team.develop }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                被困人员数
+            </td>
+            <td>
+                {{ f.team.person }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾侦察情况
+            </td>
+            <td>
+                {{ f.team.fire_recon }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                有无重大危险情况
+            </td>
+            <td>
+                {{ f.team.get_danger_display }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                作战任务
+            </td>
+            <td>
+                {{ f.team.fight_task }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                有无建筑结构图
+            </td>
+            <td>
+               {{ f.team.get_build_map_display }}
+            </td>
+        </tr>
+        {% endfor %}
+        <thead>
+            <tr>
+                <td>
+                    <b>火灾救援人员情况</b>
+                </td>
+            </tr>
+            </thead>
+            {% for fs in fs1 %}
+                <tr>
+            <td>
+                id
+            </td>
+            <td>
+                {{ fs.id }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                消防人员
+            </td>
+            <td>
+                {{ fs.get_消防人员_display }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                群众
+            </td>
+            <td>
+                {{ fs.get_群众_display }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                部队
+            </td>
+            <td>
+                {{ fs.get_部队_display }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                专家
+            </td>
+            <td>
+                {{ fs.get_专家_display }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                政府
+            </td>
+            <td>
+               {{ fs.get_政府_display }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                交警
+            </td>
+            <td>
+                {{ fs.get_交警_display }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                公安
+            </td>
+            <td>
+                {{ fs.get_公安_display }}
+            </td>
+        </tr>
+                 <tr>
+            <td>
+                医疗
+            </td>
+            <td>
+                {{ fs.get_医疗_display }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                安监
+            </td>
+            <td>
+                {{ fs.get_安监_display }}
+            </td>
+        </tr>
+             {% endfor %}
+            <thead>
+                <tr>
+                    <td>
+                        <b>救援装备使用情况</b>
+                    </td>
+                </tr>
+            </thead>
+            {% for sq in sq1 %}
+                <tr>
+            <td>
+                id
+            </td>
+            <td>
+                {{ sq.id }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                水罐车
+            </td>
+            <td>
+                {{ sq.get_水罐车_display }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                泡沫水罐车
+            </td>
+            <td>
+                {{ sq.get_泡沫水罐车_display }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                高倍水罐车
+            </td>
+            <td>
+                {{ sq.get_高倍水罐车_display }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                二氧化碳消防车
+            </td>
+            <td>
+                {{ sq.get_二氧化碳消防车_display }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                干粉消防车
+            </td>
+            <td>
+               {{ sq.get_干粉消防车_display }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                泡沫干粉联用消防车
+            </td>
+            <td>
+                {{ sq.get_泡沫干粉联用消防车_display }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                登高平台消防车
+            </td>
+            <td>
+                {{ sq.get_登高平台消防车_display }}
+            </td>
+        </tr>
+                 <tr>
+            <td>
+                云梯消防车
+            </td>
+            <td>
+                {{ sq.get_云梯消防车_display }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                通讯消防车
+            </td>
+            <td>
+                {{ sq.get_通讯消防车_display }}
+            </td>
+        </tr>
+             {% endfor %}
+    <thead>
+            <tr>
+                <td>
+                    <b>个人防护装备使用情况</b>
+                </td>
+            </tr>
+            </thead>
+            {% for pq in pq1 %}
+            <tr>
+            <td>
+                id
+            </td>
+             <td>
+                 {{ pq.id }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                头盔种类
+            </td>
+            <td>
+                {{ pq.头盔 }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                防护服种类
+            </td>
+            <td>
+                {{ pq.防护服 }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                呼吸器种类
+            </td>
+            <td>
+                {{ pq.呼吸器 }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                手防护种类
+            </td>
+            <td>
+                {{ pq.手防护 }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                足防护种类
+            </td>
+            <td>
+                {{ pq.足防护 }}
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</form>
+</body>
+</html>

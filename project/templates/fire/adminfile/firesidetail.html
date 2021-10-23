@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>详情页</title>
+    <link href="/static/css/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <style>
+        .top_box{
+            width: 100%;
+            height: 52px;
+            background-color: #417690;
+            position: relative;
+        }
+        .top_box p{
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #f5dd5d;
+            position: absolute;
+            left: 20px;
+            top: 8px;
+        }
+        .right_box{
+            width: 220px;
+            height: 20px;
+            position: absolute;
+            right: 0px;
+            top: 16px;
+
+        }
+        .right_box a{
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="top_box">
+    <p>火灾基本情况案例详情</p>
+    <div class="right_box">
+        <a href="javascript:void(0)">
+            欢迎您{{ username }}
+        </a>
+        <span style="color: #ffffff">/</span>
+        <a href="/fire/adminpsd">
+            修改密码
+        </a>
+        <span style="color: #ffffff">/</span>
+        <a href="/fire/index2">
+            返回
+        </a>
+    </div>
+</div>
+ {% for f in f1 %}
+<form action="/fire/updatefire?id={{ f.id }}"  method="post">
+{% csrf_token %}    <!-- 防跨站伪造令牌 -->
+    <table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>
+            字段名
+        </th>
+        <th>
+            字段值
+        </th>
+    </tr>
+    </thead>
+            <tr>
+            <td>
+                id
+            </td>
+             <td>
+                 {{ f.id }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                标题
+            </td>
+            <td>
+                {{ f.title }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾发生地点
+            </td>
+            <td>
+                {{ f.place }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                详细位置
+            </td>
+            <td>
+                {{ f.detal_place }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾发生日期
+            </td>
+            <td>
+                {{ f.date }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾发生时间
+            </td>
+            <td>
+                {{ f.time }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾类别
+            </td>
+            <td>
+                {{ f.fire_type }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾级别
+            </td>
+            <td>
+                {{ f.fire_level }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                火灾持续时间
+            </td>
+            <td>
+                {{ f.last_time }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                主要可燃物
+            </td>
+            <td>
+                {{ f.major_th }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                消防设施情况
+            </td>
+            <td>
+                {{ f.get_fire_build_display }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                附近水源情况
+            </td>
+            <td>
+                {{ f.get_water_display }}
+            </td>
+        </tr>
+            <thead>
+            <tr>
+                <td>
+                    <b>气象情况</b>
+                </td>
+            </tr>
+            </thead>
+            <tr>
+            <td>
+                id
+            </td>
+            <td>
+               {{ f.air.id }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                风力
+            </td>
+            <td>
+                {{ f.air.wind }}
+            </td>
+        </tr>
+            <tr>
+            <td>
+                风向
+            </td>
+            <td>
+                {{ f.air.wind_dir }}
+            </td>
+        </tr>
+            </tr>
+            <tr>
+            <td>
+                天气条件
+            </td>
+            <td>
+                {{ f.air.weather_con }}
+            </td>
+        </tr>
+            </tr>
+            <tr>
+            <td>
+                温度
+            </td>
+            <td>
+                {{ f.air.temper }}
+            </td>
+        </tr>
+            </tr>
+            <tr>
+            <td>
+                湿度
+            </td>
+            <td>
+                {{ f.air.hum }}
+            </td>
+        </tr>
+            <thead>
+            <tr>
+                <td>
+                    <b>建筑结构特点</b>
+                </td>
+            </tr>
+            </thead>
+            {% for e in e1 %}
+                <tr>
+            <td>
+                id
+            </td>
+            <td>
+                {{ e.id }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                普通建筑
+            </td>
+            <td>
+                {{ e.get_com_bulid_display }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                古建筑
+            </td>
+            <td>
+                {{ e.get_old_build_display }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                物资仓库
+            </td>
+            <td>
+                {{ e.get_wuzi_ck_display }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                生产仓库
+            </td>
+            <td>
+               {{ e.get_product_cq_display }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                储罐区
+            </td>
+            <td>
+               {{ e.get_chugq_display }}
+            </td>
+        </tr>
+                <tr>
+            <td>
+                高层建筑
+            </td>
+            <td>
+                {{ e.get_hall_build_display }}
+            </td>
+        </tr>
+                {% endfor %}
+        {% endfor %}
+    </table>
+</form>
+</body>
+</html>
